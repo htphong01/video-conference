@@ -1,0 +1,21 @@
+const axios = require('axios').default;
+
+class AuthController {
+  async index(req, res, next) {
+    const user = req.session?.passport?.user;
+    if(user) {
+      if(user.provider === 'google') {
+        user.avatar = user.photos[0].value;
+      } else if(user.provider === 'facebook') {
+        const url = `https://graph.facebook.com/v12.0/2010599445774520/picture?redirect=false&access_token=${user.token}`;
+        const { data } = await axios.get(url);
+        user.avatar = data?.data?.url;
+      }
+      res.render('meet', { user });
+    } else {
+      res.redirect('/');
+    }
+  }
+}
+
+module.exports = new AuthController();
