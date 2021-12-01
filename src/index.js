@@ -8,6 +8,7 @@ let favicon = require( 'serve-favicon' );
 const route = require('./routes');
 const session = require('express-session');
 const passport = require('passport');
+const port = process.env.PORT || 3000 ;
 
 app.use( favicon( path.join( __dirname, 'favicon.ico' ) ) );
 app.use( '/assets', express.static( path.join( __dirname, 'assets' ) ) );
@@ -26,4 +27,6 @@ route(app);
 
 io.of( '/stream' ).on( 'connection', stream );
 
-server.listen( 3000 );
+server.listen(port,()=>{
+  console.log("server listening to port "+port);
+});
