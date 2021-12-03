@@ -98,7 +98,9 @@ window.addEventListener( 'load', () => {
             sessionStorage.setItem( 'username', name );
 
             //reload room
-            location.reload();
+            const roomID = document.querySelector('#join-room-input-id').value;
+            const url = `${location.origin}/meet?room=${roomID}`
+            location.replace(url);
         }
 
         else {

@@ -9,16 +9,21 @@ window.addEventListener( 'load', () => {
     const username = sessionStorage.getItem( 'username' );
 
     if ( !room ) {
-        document.querySelector( '#room-create' ).attributes.removeNamedItem( 'hidden' );
+        // document.querySelector('#room-create').style.display = 'block';
+        // document.querySelector('#username-set').style.display = 'none';
+        document.querySelectorAll('.tablinks')[0].click();
     }
 
     else if ( !username ) {
-        document.querySelector( '#username-set' ).attributes.removeNamedItem( 'hidden' );
+        // document.querySelector('#room-create').style.display = 'none';
+        // document.querySelector('#username-set').style.display = 'block';
+        document.querySelectorAll('.tablinks')[1].click();
     }
 
     else {
         let commElem = document.getElementsByClassName( 'room-comm' );
         document.querySelector('.control-navbar').classList.add('d-flex');
+        document.querySelector( '#intro-room').style.display = 'none';
 
         for ( let i = 0; i < commElem.length; i++ ) {
             commElem[i].attributes.removeNamedItem( 'hidden' );
