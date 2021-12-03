@@ -136,16 +136,16 @@
                                     <span class="form-text small text-danger" id='err-msg'></span>
                                 </div>
                                 <div class="group">
-                                    <input type="text" id='room-name' class="form-control rounded-0"
+                                    <input type="text" id='room-name' class="form-control rounded-0 input-element"
                                         placeholder="Tên phòng">
                                 </div>
                                 <div class="group">
                                     <input type="text" value="<%= user.displayName %>" id='your-name'
-                                        class="form-control rounded-0" placeholder="Tên hiển thị">
+                                        class="form-control rounded-0 input-element" placeholder="Tên hiển thị">
                                 </div>
-                                <div class="group">
-                                    <button id='create-room' class="btn btn-block rounded-0 btn-info">Create
-                                        Room
+                                <div class="group mt-5">
+                                    <button id='create-room' class="btn btn-block btn-info">
+                                        Tạo phòng
                                     </button>
                                 </div>
                                 <div class="hr"></div>
@@ -156,19 +156,20 @@
                                 <div class="col-12 text-center">
                                     <span class="form-text small text-danger" id='err-msg-username'></span>
                                 </div>
-                                <div class="col-12 mb-3">
-                                    <label for="username">ID phòng:</label>
-                                    <input type="text" id="join-room-input-id" class="form-control rounded-0 w-100" placeholder="ID phòng">
+                                <div class="col-12 p-0" style="margin-bottom: 25px;" >
+                                    <!-- <label for="username">ID phòng:</label> -->
+                                    <input type="text" id="join-room-input-id" class="form-control rounded-0 input-element" placeholder="ID phòng">
                                 </div>
-                                <div class="col-12 mb-3">
-                                    <label for="username">Tên hiển thị:</label>
+                                <div class="col-12 mb-3 p-0">
+                                    <!-- <label for="username">Tên hiển thị:</label> -->
                                     <input type="text" value="<%= user.displayName %>" id='username'
-                                        class="form-control rounded-0 w-100" placeholder="Tên hiển thị">
+                                        class="form-control input-element" placeholder="Tên hiển thị">
                                 </div>
 
-                                <div class="col-12 mb-3">
-                                    <button id='enter-room' class="btn btn-block rounded-0 btn-info">Join
-                                        Room</button>
+                                <div class="col-12 mb-3 mt-5">
+                                    <button id='enter-room' class="btn btn-block btn-info">
+                                        Tham gia phòng
+                                    </button>
                                 </div>
                             </form>
                         </div>

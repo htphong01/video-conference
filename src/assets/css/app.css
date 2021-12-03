@@ -183,6 +183,30 @@
     width: 80%;
 }
 
+.input-element {
+    border: none;
+    border-bottom:  1px solid #ddd;
+}
+
+.input-element:focus {
+    box-shadow: none;
+}
+
+#create-room,
+#enter-room {
+    background-color: #466182;
+    color: #ffffff;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 25px;
+    width: 100%;
+    display: block;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: 'Roboto';
+    box-shadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
+}
+
 
 @keyframes animatetop {
     from {top: -300px; opacity: 0}

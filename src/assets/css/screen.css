@@ -93,6 +93,7 @@
 	border-color:#1161ee;
 }
 .login-form{
+	width: 40%;
 	min-height:345px;
 	position:relative;
 	perspective:1000px;
