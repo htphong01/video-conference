@@ -8,13 +8,18 @@ let favicon = require( 'serve-favicon' );
 const route = require('./routes');
 const session = require('express-session');
 const passport = require('passport');
+const { connect } = require('./config/database');
+const { urlencoded } = require('express');
 const port = process.env.PORT || 3000 ;
 
 app.use( favicon( path.join( __dirname, 'favicon.ico' ) ) );
 app.use( '/assets', express.static( path.join( __dirname, 'assets' ) ) );
 
 app.set('view engine', 'ejs')
-app.set('views', path.join(__dirname, 'resources', 'views'));;
+app.set('views', path.join(__dirname, 'resources', 'views'));
+
+app.use(urlencoded({ extended: true }));
+app.use(express.json());
 
 app.use(passport.initialize());
 app.use(session({
@@ -24,6 +29,8 @@ app.use(session({
 }));
 
 route(app);
+
+connect();
 
 io.of( '/stream' ).on( 'connection', stream );
 

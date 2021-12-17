@@ -10,6 +10,8 @@ class AuthController {
         const url = `https://graph.facebook.com/v12.0/2010599445774520/picture?redirect=false&access_token=${user.token}`;
         const { data } = await axios.get(url);
         user.avatar = data?.data?.url;
+      } else if(user.provider === 'linkedin') {
+        user.avatar = user.photos[0].value;
       }
       res.render('meet', { user });
     } else {
