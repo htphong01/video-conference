@@ -36,42 +36,41 @@
     </div>
 
 
-    <nav class="navbar fixed-top bg-info rounded-0 d-print-none align-items-center control-navbar d-none">
-        <div class="text-white">
-            <a href="/meet" class="text-white text-decoration-none">Video Call</a>
-        </div>
+    <nav class="navbar fixed-top rounded-0 d-print-none align-items-center control-navbar d-none">
 
-        <div class="pull-right room-comm" hidden>
-            <button class="btn btn-sm rounded-0 btn-no-effect" id='toggle-video' title="Hide Video">
-                <i class="fa fa-video text-white"></i>
+        <div class="pull-right room-comm room-control-btns " hidden>
+            <button class="btn btn-sm rounded-0 btn-no-effect room-control-btn" id='toggle-video' title="Hide Video">
+                <!-- <i class="fa fa-video text-white"></i> -->
+                <img src="assets/images/camera.svg" alt="camera">
             </button>
 
-            <button class="btn btn-sm rounded-0 btn-no-effect" id='toggle-mute' title="Mute">
-                <i class="fa fa-microphone-alt text-white"></i>
+            <button class="btn btn-sm rounded-0 btn-no-effect room-control-btn" id='toggle-mute' title="Mute">
+                <!-- <i class="fa fa-microphone-alt text-white"></i> -->
+                <img src="assets/images/micro.svg" alt="micro">
             </button>
 
-            <button class="btn btn-sm rounded-0 btn-no-effect" id='share-screen' title="Share screen">
+            <button class="btn btn-sm rounded-0 btn-no-effect room-control-btn" id='share-screen' title="Share screen">
                 <i class="fa fa-desktop text-white"></i>
+                <!-- <img src="./assets/images/present-white.svg" alt="present"> -->
+
             </button>
 
-            <button class="btn btn-sm rounded-0 btn-no-effect" id='record' title="Record">
+            <button class="btn btn-sm rounded-0 btn-no-effect room-control-btn" id='record' title="Record">
                 <i class="fa fa-dot-circle text-white"></i>
             </button>
 
-            <button class="btn btn-sm text-white pull-right btn-no-effect" id='toggle-chat-pane'>
+            <button class="btn btn-sm text-white pull-right btn-no-effect room-control-btn" id='toggle-chat-pane'>
                 <i class="fa fa-comment"></i> <span class="badge badge-danger very-small font-weight-lighter"
                     id='new-chat-notification' hidden>New</span>
             </button>
 
-            <button class="btn btn-sm rounded-0 btn-no-effect text-white">
-                <a href="/meet" class="text-white text-decoration-none"><i class="fa fa-sign-out-alt text-white"
-                        title="Leave"></i></a>
+            <button
+                class="btn btn-sm rounded-0 btn-no-effect room-control-btn text-white active room-control-btn-end-call">
+                <a href="/meet" class="text-white text-decoration-none" title="Leave">
+                    <img src="./assets/images/end-call.svg">
+                    <!-- <i class="fa fa-sign-out-alt text-white" ></i> -->
+                </a>
             </button>
-        </div>
-        <div>
-            <p class="text-white">
-                <%= user.displayName %>
-            </p>
         </div>
     </nav>
 
@@ -108,9 +107,9 @@
                                 <div class="name-mail-user">
                                     <%= user.displayName %>
                                 </div>
-                                <div class="change-mail-user">
+                                <!-- <div class="change-mail-user">
                                     <a href="#" class="link-mail-user">Switch Accounts</a>
-                                </div>
+                                </div> -->
                                 <div class="change-mail-user">
                                     <a href="/auth/logout" class="link-mail-user">Logout</a>
                                 </div>
@@ -155,9 +154,10 @@
                                 <div class="col-12 text-center">
                                     <span class="form-text small text-danger" id='err-msg-username'></span>
                                 </div>
-                                <div class="col-12 p-0" style="margin-bottom: 25px;" >
+                                <div class="col-12 p-0" style="margin-bottom: 25px;">
                                     <!-- <label for="username">ID phòng:</label> -->
-                                    <input type="text" id="join-room-input-id" class="form-control rounded-0 input-element" placeholder="Room ID">
+                                    <input type="text" id="join-room-input-id"
+                                        class="form-control rounded-0 input-element" placeholder="Room ID">
                                 </div>
                                 <div class="col-12 mb-3 p-0">
                                     <!-- <label for="username">Tên hiển thị:</label> -->
@@ -185,12 +185,17 @@
 
     <div class="container-fluid room-comm" hidden>
         <div class="row">
-            <video class="local-video mirror-mode" id='local' volume='0' autoplay muted></video>
+            <!-- <video class="local-video mirror-mode" id='local' volume='0' autoplay muted></video> -->
         </div>
 
         <div class="row">
             <div class="col-md-12 main" id='main-section'>
-                <div class="row mt-2 mb-2" id='videos'></div>
+                <div class="row mt-2 mb-2" id='videos'>
+                    <div class="card card-sm user-camera">
+                        <video class="local-video mirror-mode" id='local' volume='0' autoplay muted></video>
+                        <div class="user-name">You</div>
+                    </div>
+                </div>
             </div>
 
             <div class="col-md-3 chat-col d-print-none mb-2 bg-info" id='chat-pane' hidden>

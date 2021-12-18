@@ -134,15 +134,17 @@ export default {
 
         if ( senderType === 'remote' ) {
             contentAlign = 'justify-content-start';
-            senderName = data.sender;
+            senderName = data.sender.substring(0, data.sender.indexOf('(__'));
             msgBg = '';
 
             this.toggleChatNotificationBadge();
         }
 
+        console.log(senderName);
+
         let infoDiv = document.createElement( 'div' );
         infoDiv.className = 'sender-info';
-        infoDiv.innerText = `${ senderName } - ${ moment().format( 'Do MMMM, YYYY h:mm a' ) }`;
+        infoDiv.innerText = `${ senderName } - ${ moment().format( 'h:mm a' ) }`;
 
         let colDiv = document.createElement( 'div' );
         colDiv.className = `col-10 card chat-card msg ${ msgBg }`;

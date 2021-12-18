@@ -18,6 +18,24 @@
 </head>
 
 <body>
+  <div class="toast">
+    <div class="toast-header">
+      <strong class="mr-auto">Notification</strong>
+      <small></small>
+    </div>
+    <div class="toast-body">
+      An error occurred please try again
+    </div>
+  </div>
+  <div class="success-toast">
+    <div class="toast-header">
+      <strong class="mr-auto">Notification</strong>
+      <small></small>
+    </div>
+    <div class="toast-body">
+      Create new account successful
+    </div>
+  </div>
   <div class="app">
     <div class="app-header d-flex align-items-center justify-content-between">
       <div class="font-weight-bold">
@@ -37,13 +55,18 @@
         Join with more than 100,000 users in this platform.
       </div>
       <div class="body-login-group">
-        <form>
+        <form id="login-form-id">
+          <div class="login-error">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span>User is not exist</span>
+          </div>
           <div class="local-login-input-group">
-            <input type="email" class="local-login-input" placeholder="Email" />
+            <input type="email" name="email" class="local-login-input" placeholder="Email" required />
             <i class="far fa-user"></i>
           </div>
           <div class="local-login-input-group">
-            <input type="password" class="local-login-input" id="local-input-password" placeholder="Password" />
+            <input type="password" name="password" class="local-login-input" id="local-input-password"
+              placeholder="Password" required />
             <i class="show-password-icon far fa-eye fa-eye-slash"></i>
           </div>
           <div class="local-login-input-group local-submit-input-group">
@@ -96,13 +119,22 @@
           </button>
         </div>
         <div class="modal-body">
-          <form method="post" action="/auth/register">
+          <div class="register-error">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span>User is not exist</span>
+          </div>
+          <form id="register-form-id">
             <div class="local-login-input-group">
-              <input name="email" type="email" class="register-input" placeholder="Email" />
+              <input name="displayName" type="text" class="register-input" placeholder="Your name" required />
+              <i class="far fa-address-card"></i>
+            </div>
+            <div class="local-login-input-group">
+              <input name="email" type="email" class="register-input" placeholder="Email" required />
               <i class="far fa-user"></i>
             </div>
             <div class="local-login-input-group">
-              <input name="password" type="password" class="register-input" id="register-input-password" placeholder="Password" />
+              <input name="password" type="password" class="register-input" id="register-input-password"
+                placeholder="Password" required />
               <i class="register-show-password-icon far fa-eye fa-eye-slash"></i>
             </div>
             <div class="local-login-input-group local-submit-input-group">
@@ -124,6 +156,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="assets/js/home.js"></script>
 </body>
 

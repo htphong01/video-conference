@@ -63,7 +63,7 @@
 }
 
 .main{
-    padding-top: 40px;
+    padding-top: 12px;
 }
 
 
@@ -91,12 +91,15 @@
     visibility: visible;
 }
 
+#videos {
+    justify-content: center;
+}
 
 .local-video{
-    bottom: 0;
+    /* bottom: 0;
     left: 0;
     position: fixed;
-    width:15vw;
+    width:15vw; */
 }
 
 
@@ -130,6 +133,7 @@
 
 .btn-no-effect:focus{
     box-shadow: none;
+    
 }
 
 .very-small{
@@ -207,6 +211,58 @@
     box-shadow: 0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
 }
 
+.user-camera {
+    position: relative;
+}
+
+.user-name {
+    z-index: 999999;
+    position: absolute;
+    bottom: 4px;
+    left: 12px;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+.room-control-btns {
+    position: fixed;
+    display: flex;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 12px 0;
+}
+
+.room-control-btn {
+    height: 50px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #466182;
+    cursor: pointer;
+    border-radius: 50% !important;
+    margin: 0 7px;
+    box-shadow: 0 5px 5px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
+}
+
+.room-control-btn.active {
+    background: #EA4335;
+}
+
+.room-control-btn-end-call {
+    width: 64px;
+    border-radius: 100px !important;
+}
+
+.room-control-btn-end-call > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    
+}
 
 @keyframes animatetop {
     from {top: -300px; opacity: 0}

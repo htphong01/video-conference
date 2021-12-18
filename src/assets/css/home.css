@@ -1,6 +1,8 @@
 :root {
   --primary-background: #161616;
   --input-background-color: #222222;
+  --error-toast-background-color: #BD3630;
+  --success-toast-background-color: #51A351;
   --primary-text-color: #FFFFFF;
   --secondary-text-color: #5D5D5D;
   --placeholder-text-color: #6D6D6D;
@@ -203,4 +205,31 @@ input:focus {
   align-items: center;
   font-size: 12px;
   color: var(--secondary-text-color);
+}
+
+.login-error, 
+.register-error {
+  color: red;
+  font-size: 14px;
+  display: none;
+}
+
+.toast,
+.success-toast {
+  width: 320px;
+  position: fixed; 
+  top: 24px; 
+  right: 12%; 
+  transform: translateX(50%);
+  background: var(--error-toast-background-color);
+  padding: 8px 20px;
+  color: var(--primary-text-color);
+  transition: all 1s ease;
+  border-radius: 4px;
+  display: none;
+}
+
+.success-toast {
+  z-index: 99999;
+  background: var(--success-toast-background-color);
 }

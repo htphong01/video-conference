@@ -34,6 +34,7 @@
 }
 .name-mail-user, .change-mail-user {
 	text-align: right;
+	font-weight: bold;
 }
 .link-mail-user {
 	font-style: italic;

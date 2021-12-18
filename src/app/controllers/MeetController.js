@@ -1,8 +1,8 @@
 const axios = require('axios').default;
 
-class AuthController {
+class MeetController {
   async index(req, res, next) {
-    const user = req.session?.passport?.user;
+    const user = req.session?.passport?.user || req.session?.user;
     if(user) {
       if(user.provider === 'google') {
         user.avatar = user.photos[0].value;
@@ -20,4 +20,4 @@ class AuthController {
   }
 }
 
-module.exports = new AuthController();
+module.exports = new MeetController();
