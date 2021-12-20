@@ -206,8 +206,8 @@ input:focus {
 	border-radius:25px;
 	width:100%;
 	display:block;
-  	font-weight: 700;
-  	text-transform:uppercase;
+  font-weight: 700;
+  text-transform:uppercase;
 	font-family: 'Roboto';
 	box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
 }
@@ -218,37 +218,36 @@ input:focus {
 
 /* Style the buttons inside the tab */
 .tabs a {
-    display: block;
-    background-color: inherit;
-    color: #ffffff;
-    padding: 30px 16px;
-    width: 150px;
-    border: none;
-    outline: none;
-    text-align: center;
-    cursor: pointer;
-    transition: 0.3s;
-    font-size: 17px;
+	display: block;
+	background-color: inherit;
+	color: #ffffff;
+	padding: 30px 16px;
+	width: 150px;
+	border: none;
+	outline: none;
+	text-align: center;
+	cursor: pointer;
+	transition: 0.3s;
+	font-size: 17px;
 	right: 0;
-	
-  }
+}
   
   /* Change background color of buttons on hover */
-  .tabs a:hover {
-    background-color: #000000;
+.tabs a:hover {
+  background-color: #000000;
 	opacity: 89%;
 	text-decoration: none;
-  }
+}
   
   /* Create an active/current "tab button" class */
   .tabs a.active {
-    background-color: #ffffff;
-    color: #354B60;
+  background-color: #ffffff;
+  color: #354B60;
 	opacity: 100% !important;
 	z-index: 999;
 	border-bottom-left-radius: 10px;
 	border-top-left-radius: 10px;
-  }
+}
 
 .bar-icon {
 	color: #ffffff;
@@ -263,3 +262,4 @@ input:focus {
 	font-size: 24px;
 	margin-left: 20px;
 }
+

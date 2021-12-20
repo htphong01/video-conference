@@ -1,5 +1,11 @@
+body {
+    height: 100vh;
+    background: #F3F4F7;
+    overflow: hidden;
+}
+
 .chat-col{
-    right: -100vw;
+    /* right: -100vw;
     bottom: 0;
     top: 40.5px;
     z-index: 1000;
@@ -9,11 +15,12 @@
     padding-left: 5px;
     padding-bottom: 40px;
     padding-top: 15px;
-    min-height: 100vh;
+    min-height: 100vh; */
+    margin-top: 12px;
 }
 
 .chat-col.chat-opened {
-    right: 0;
+    right: 12px;
     overflow-y: auto;
     overflow-x: hidden;
     transition: all 0.3s ease !important;
@@ -63,7 +70,9 @@
 }
 
 .main{
-    padding-top: 12px;
+    /* padding-top: 12px; */
+    padding-left: 20px;
+    padding-right: 48px;
 }
 
 
@@ -71,6 +80,7 @@
     width:100%;
     height:auto;
     max-height: 90vh;
+    border-radius: 4px;
 }
 
 
@@ -93,13 +103,12 @@
 
 #videos {
     justify-content: center;
+    height: 100%;
+    align-items: center;
 }
 
 .local-video{
-    /* bottom: 0;
-    left: 0;
-    position: fixed;
-    width:15vw; */
+    border-radius: 4px;
 }
 
 
@@ -109,7 +118,6 @@
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
 }
-
 
 .sender-info{
     font-size: smaller;
@@ -225,12 +233,12 @@
 }
 
 .room-control-btns {
-    position: fixed;
+    /* position: fixed; */
     display: flex;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    margin: 12px 0;
+    /* bottom: 20px; */
+    /* left: 50%; */
+    /* transform: translateX(-50%); */
+    /* margin: 12px 0; */
 }
 
 .room-control-btn {
@@ -262,6 +270,68 @@
     height: 100%;
     width: 100%;
     
+}
+
+.room-interact-control {
+    /* position: fixed; */
+    /* bottom: 20px; */
+    /* right: 20px; */
+    /* margin: 12px 0; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  
+.room-interact-control-item {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    cursor: pointer;
+}
+  
+.room-interact-control-item.active i {
+    color: #8AB4F8;
+}
+  
+.room-interact-control-item:hover {
+    background:rgba(53, 75, 96, 0.9);
+}
+  
+.room-interact-control-item:hover > i {
+    color: #ffffff;
+    font-size: 20px;
+}
+  
+.room-interact-control-item i {
+    font-size: 20px;
+    color: #466182;
+}
+
+.control-navbar.navbar.custom-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+}
+
+.container-fluid.room-comm {
+    height: calc(100% - 80px);
+}
+
+.image-logo-web {
+    width: 50px;
+    margin-top: 10px;
+    margin-left: 30px;
+}
+
+.time-web-room {
+    font-size: 20px;
+    margin-left: 10px;
 }
 
 @keyframes animatetop {

@@ -105,6 +105,13 @@ input:focus {
   padding: 0 40px 0 16px;
 }
 
+input.local-login-input:-webkit-autofill,
+input.local-login-input:-webkit-autofill:hover, 
+input.local-login-input:-webkit-autofill:focus, 
+input.local-login-input:-webkit-autofill:active{
+  background: var(--input-background-color);
+}
+
 .local-login-input::placeholder {
   color: var(--placeholder-text-color);
 }
