@@ -223,15 +223,25 @@
 						Messages can only be seen by people in the call and are deleted when the call ends.
 					</div>
 					<ul class="interaction-chatting-list-messages" id="message-list-id">
-						
+						<li class="interaction-chatting-message-item">
+							<div class="chatting-message-info">
+								<div class="chatting-message-username">123123</div>
+								<div class="chatting-message-time">1231312</div>
+							</div>
+							<div class="chatting-message-content">
+								<a href="/uploads/1641492195755--19h1n3v-a-360-image-of-boat.jpeg" target="_blank" >
+									<img src="/uploads/1641492195755--19h1n3v-a-360-image-of-boat.jpeg" style="width: 100%" />
+								</a>
+							</div>
+						</li>
 					</ul>
 					<div class="interaction-chatting-input">
 						<form id="message-form-id">
 							<div style="display: flex; align-items: center; justify-content: center">
 								<div style="width: 15%;">
-									<input type="file" name="image" id="image" onchange="readURL(this);" style="display: none;"
-										accept="image/*">
-									<label for="image" class="label-img" style="margin-bottom: 0;">
+									<input type="file" name="image" id="chat-image" style="display: none;"
+										accept="*/*">
+									<label for="chat-image" class="label-img" style="margin-bottom: 0;">
 										<img class="file" src="./assets/images/ph_paperclip-light.svg" alt="">
 									</label>
 								</div>
@@ -323,6 +333,7 @@
 			</div>
 		</div>
 	</nav>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script src='/socket.io/socket.io.js'></script>
 	<script type="module" src='assets/js/rtc.js'></script>
 	<script type="module" src='assets/js/events.js'></script>

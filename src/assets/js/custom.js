@@ -146,3 +146,4 @@ copyLinkBtn.onclick = () => {
     tooltip.innerHTML = "Copy to clipboard";
   }, 1000);
 }
+

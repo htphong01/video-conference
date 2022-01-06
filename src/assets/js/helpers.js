@@ -1,3 +1,7 @@
+function checkImageFile(url) {
+	return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
+}
+
 export default {
 	generateRandomString() {
 		const crypto = window.crypto || window.msCrypto;
@@ -5,7 +9,6 @@ export default {
 
 		return crypto.getRandomValues(array);
 	},
-
 
 	closeVideo(elemId) {
 		if (document.getElementById(elemId)) {
@@ -134,17 +137,52 @@ export default {
 			senderName = data.sender;
 		}
 
-		const html = `
-			<li class="interaction-chatting-message-item">
-				<div class="chatting-message-info">
-					<div class="chatting-message-username">${senderName}</div>
-					<div class="chatting-message-time">${moment().format('h:mm A')}</div>
-				</div>
-				<div class="chatting-message-content">
-					${data.msg}
-				</div>
-			</li>
-		`
+		let html;
+		if (data.type === 'text') {
+			html = `
+				<li class="interaction-chatting-message-item">
+					<div class="chatting-message-info">
+						<div class="chatting-message-username">${senderName}</div>
+						<div class="chatting-message-time">${moment().format('h:mm A')}</div>
+					</div>
+					<div class="chatting-message-content">
+						${data.msg}
+					</div>
+				</li>
+			`
+		} else if (data.type === 'file') {
+			const file = data.msg;
+			console.log(file);
+			if (checkImageFile(file.path)) {
+				html = `
+					<li class="interaction-chatting-message-item">
+						<div class="chatting-message-info">
+							<div class="chatting-message-username">${senderName}</div>
+							<div class="chatting-message-time">${moment().format('h:mm A')}</div>
+						</div>
+						<div class="chatting-message-content">
+							<a href="/uploads/${file.filename}" target="_blank" >
+								<img src="/uploads/${file.filename}" style="width: 100%" />
+							</a>
+						</div>
+					</li>
+				`
+			} else {
+				html = `
+					<li class="interaction-chatting-message-item">
+						<div class="chatting-message-info">
+							<div class="chatting-message-username">${senderName}</div>
+							<div class="chatting-message-time">${moment().format('h:mm A')}</div>
+						</div>
+						<div class="chatting-message-content">
+							<a href="/uploads/${file.filename}" target="_blank" >
+								<span style="color: blue" >${file.filename}</span>
+							</a>
+						</div>
+					</li>
+				`
+			}
+		}
 		chatMsgDiv.insertAdjacentHTML('beforeend', html);
 		chatMsgDiv.scrollTo(0, chatMsgDiv.scrollHeight)
 	},

@@ -11,6 +11,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "mongoose": "^6.1.2",
+    "multer": "^1.4.4",
     "passport": "^0.5.0",
     "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^2.0.0",

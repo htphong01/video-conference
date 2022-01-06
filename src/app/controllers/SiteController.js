@@ -7,6 +7,19 @@ class SiteController {
       res.render('index');
     }
   }
+
+  uploadFile(req, res, next) {
+    if(req.file) {
+      res.json({
+        success: true,
+        file: req.file
+      });
+    } else {
+      res.json({
+        success: false
+      })
+    }
+  }
 }
 
 module.exports = new SiteController();
