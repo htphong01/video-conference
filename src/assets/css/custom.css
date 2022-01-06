@@ -36,10 +36,17 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .interaction-chatting-list-messages {
   flex: 1;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.interaction-chatting-list-messages::-webkit-scrollbar {
+  display: none;
 }
 
 .body-interaction-close-btn {
@@ -234,7 +241,7 @@
 }
 
 .interaction-chatting-message-item {
-  padding: 14px 24px;
+  padding: 8px 24px;
 }
 
 .chatting-message-info {
@@ -303,4 +310,57 @@
   font-size: 12px;
   line-height: 19px;
   font-family: 'Roboto', Arial, sans-serif;
+}
+
+.message-input {
+  border: none;
+  width: 100%;
+  padding-right: 20px;
+}
+
+.btn-send-message {
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.btn-send-message:focus {
+  border: none;
+  outline: none;
+}
+
+.interaction-info-copy-link-btn {
+  position: relative;
+}
+
+.interaction-info-copy-link-btn .tooltiptext {
+  visibility: hidden;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 120%;
+  left: 50%;
+  margin-left: -75px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.interaction-info-copy-link-btn .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.interaction-info-copy-link-btn:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
 }

@@ -184,7 +184,8 @@
 					<div class="interaction-info-link">
 						https://meet.google.com/saw-hyhk-cbx
 					</div>
-					<div class="interaction-info-copy-link-btn">
+					<div class="interaction-info-copy-link-btn ">
+						<span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
 						<i class="far fa-copy"></i>
 						<span>Copy joining info</span>
 					</div>
@@ -222,21 +223,21 @@
 						Messages can only be seen by people in the call and are deleted when the call ends.
 					</div>
 					<ul class="interaction-chatting-list-messages" id="message-list-id">
-					<!-- <ul class="interaction-chatting-list-messages" id='chat-messages'> -->
 						
 					</ul>
 					<div class="interaction-chatting-input">
-						<form action="" id="message-form-id">
-							<div style="display: flex;">
+						<form id="message-form-id">
+							<div style="display: flex; align-items: center; justify-content: center">
 								<div style="width: 15%;">
 									<input type="file" name="image" id="image" onchange="readURL(this);" style="display: none;"
 										accept="image/*">
-									<label for="image" class="label-img">
+									<label for="image" class="label-img" style="margin-bottom: 0;">
 										<img class="file" src="./assets/images/ph_paperclip-light.svg" alt="">
 									</label>
 								</div>
 								<div style="width: 75%;">
-									<input id='chat-input' type="text" name="message" class="message-input" placeholder="Send a message to everyone">
+									<input id='chat-input' type="text" name="message" class="message-input"
+										placeholder="Send a message to everyone">
 								</div>
 								<div style="width: 10%;float: right;">
 									<button class="btn-send-message" type="submit"><img src="./assets/images/send-message.svg"

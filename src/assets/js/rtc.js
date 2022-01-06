@@ -1,7 +1,3 @@
-/**
- * @author Amir Sanni <amirsanni@gmail.com>
- * @date 6th January, 2020
- */
 import h from './helpers.js';
 
 window.addEventListener('load', () => {
@@ -9,14 +5,10 @@ window.addEventListener('load', () => {
     const username = sessionStorage.getItem('username');
 
     if (!room) {
-        // document.querySelector('#room-create').style.display = 'block';
-        // document.querySelector('#username-set').style.display = 'none';
         document.querySelectorAll('.tablinks')[0].click();
     }
 
     else if (!username) {
-        // document.querySelector('#room-create').style.display = 'none';
-        // document.querySelector('#username-set').style.display = 'block';
         document.querySelectorAll('.tablinks')[1].click();
     }
 
@@ -126,7 +118,7 @@ window.addEventListener('load', () => {
             let data = {
                 room: room,
                 msg: msg,
-                sender: `${username} (${randomNumber})`
+                sender: `${username}`
             };
 
             //emit chat message
@@ -360,15 +352,12 @@ window.addEventListener('load', () => {
 
 
         //Chat textarea
-        document.getElementById('chat-input').addEventListener('keypress', (e) => {
-            if (e.which === 13 && (e.target.value.trim())) {
-                e.preventDefault();
-
-                sendMsg(e.target.value);
-
-                setTimeout(() => {
-                    e.target.value = '';
-                }, 50);
+        document.getElementById('message-form-id').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const msg = e.target.message.value;
+            if (msg.trim()) {
+                sendMsg(msg);
+                document.querySelector('#chat-input').value = '';
             }
         });
 
