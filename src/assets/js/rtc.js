@@ -380,7 +380,7 @@ window.addEventListener('load', () => {
 
 		document.querySelector('.interaction-activity-item-info').onclick = () => {
 			const url = `${window.location.origin}/meet/whiteboard?room=${uuidv4()}`;
-			const msg = `Đã chia sẽ 1 whiteboard. Tham gia tại <a href="${url}" target="_blank">${url}</a>`
+			const msg = `Đã chia sẽ 1 whiteboard. Tham gia tại <br> <a href="${url}" style="color: blue" target="_blank">${url}</a>`
 			sendMsg(msg);
 			window.open(url, '_blank');
 		}
