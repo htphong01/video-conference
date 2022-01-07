@@ -1,6 +1,6 @@
 const passport = require('passport');
 const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
-const url = 'https://hp-video-conference.herokuapp.com'
+const url = 'https://hp-video-conference.herokuapp.com';
 // const url = 'http://localhost:3000';
 
 passport.use(
