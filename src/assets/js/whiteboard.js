@@ -2,10 +2,9 @@ import h from './helpers.js';
 
 const room = h.getQString(location.href, 'room');
 console.log('room', room);
-if(!room) window.location.replace('/meet');
+if (!room) window.location.replace('/meet');
 
 (function () {
-
   const socket = io('/stream');
   let socketId = '';
   socket.on('connect', () => {
@@ -14,7 +13,7 @@ if(!room) window.location.replace('/meet');
 
     socket.emit('subscribe', {
       room: room,
-      socketId: socketId
+      socketId: socketId,
     });
 
     var canvas = document.getElementsByClassName('whiteboard')[0];
@@ -22,7 +21,7 @@ if(!room) window.location.replace('/meet');
     var context = canvas.getContext('2d');
 
     var current = {
-      color: 'black'
+      color: 'black',
     };
     var drawing = false;
 
@@ -46,7 +45,6 @@ if(!room) window.location.replace('/meet');
     window.addEventListener('resize', onResize, false);
     onResize();
 
-
     function drawLine(x0, y0, x1, y1, color, emit) {
       context.beginPath();
       context.moveTo(x0, y0);
@@ -56,7 +54,9 @@ if(!room) window.location.replace('/meet');
       context.stroke();
       context.closePath();
 
-      if (!emit) { return; }
+      if (!emit) {
+        return;
+      }
       var w = canvas.width;
       var h = canvas.height;
 
@@ -66,7 +66,7 @@ if(!room) window.location.replace('/meet');
         y0: y0 / h,
         x1: x1 / w,
         y1: y1 / h,
-        color: color
+        color: color,
       });
     }
 
@@ -77,14 +77,32 @@ if(!room) window.location.replace('/meet');
     }
 
     function onMouseUp(e) {
-      if (!drawing) { return; }
+      if (!drawing) {
+        return;
+      }
       drawing = false;
-      drawLine(current.x, current.y, e.clientX || e.touches[0].clientX, e.clientY || e.touches[0].clientY, current.color, true);
+      drawLine(
+        current.x,
+        current.y,
+        e.clientX || e.touches[0].clientX,
+        e.clientY || e.touches[0].clientY,
+        current.color,
+        true
+      );
     }
 
     function onMouseMove(e) {
-      if (!drawing) { return; }
-      drawLine(current.x, current.y, e.clientX || e.touches[0].clientX, e.clientY || e.touches[0].clientY, current.color, true);
+      if (!drawing) {
+        return;
+      }
+      drawLine(
+        current.x,
+        current.y,
+        e.clientX || e.touches[0].clientX,
+        e.clientY || e.touches[0].clientY,
+        current.color,
+        true
+      );
       current.x = e.clientX || e.touches[0].clientX;
       current.y = e.clientY || e.touches[0].clientY;
     }
@@ -99,7 +117,7 @@ if(!room) window.location.replace('/meet');
       return function () {
         var time = new Date().getTime();
 
-        if ((time - previousCall) >= delay) {
+        if (time - previousCall >= delay) {
           previousCall = time;
           callback.apply(null, arguments);
         }

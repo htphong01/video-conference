@@ -1,11 +1,19 @@
 const tabLinks = document.querySelectorAll('.tablinks');
-const interactionCloseBtn = document.querySelector('.body-interaction-close-btn');
+const interactionCloseBtn = document.querySelector(
+  '.body-interaction-close-btn'
+);
 const bodyInteraction = document.querySelector('.body-interaction');
-const interactionControlBtn = document.querySelectorAll('.room-interact-control-item');
-const searchPeopleInput = document.querySelector('.interaction-people-search-block > input');
+const interactionControlBtn = document.querySelectorAll(
+  '.room-interact-control-item'
+);
+const searchPeopleInput = document.querySelector(
+  '.interaction-people-search-block > input'
+);
 const interactionTitle = document.querySelector('.body-interaction-title');
-const bodyInteractionItem = document.querySelectorAll('.body-interaction-content');
-const mainSection = document.querySelector('#main-section')
+const bodyInteractionItem = document.querySelectorAll(
+  '.body-interaction-content'
+);
+const mainSection = document.querySelector('#main-section');
 
 let isBodyInteractionActive = false;
 
@@ -22,7 +30,7 @@ tabLinks.forEach((tabLink, index) => {
       document.querySelector('#room-create').style.display = 'none';
       document.querySelector('#username-set').style.display = 'block';
     }
-  })
+  });
 });
 
 const urlSearchParams = new URLSearchParams(window.location.search);
@@ -39,12 +47,11 @@ function closeBodyInteraction() {
   isBodyInteractionActive = false;
   setTimeout(function () {
     bodyInteraction.style.display = 'none';
-  }, 100)
+  }, 100);
 }
 
 interactionControlBtn.forEach((interactBtn, index) => {
   interactBtn.onclick = function () {
-
     switch (index) {
       case 0:
         renderInteractionBody('details');
@@ -81,20 +88,20 @@ interactionControlBtn.forEach((interactBtn, index) => {
       bodyInteraction.style.display = 'flex';
       mainSection.classList.remove('col-md-12');
     }
-  }
-})
+  };
+});
 
 function removeInteractControl() {
-  interactionControlBtn.forEach(item => item.classList.remove('active'));
+  interactionControlBtn.forEach((item) => item.classList.remove('active'));
 }
 
 searchPeopleInput.onfocus = function () {
   this.parentElement.classList.add('focus');
-}
+};
 
 searchPeopleInput.addEventListener('focusout', function () {
   this.parentElement.classList.remove('focus');
-})
+});
 
 function renderInteractionBody(type) {
   switch (type) {
@@ -123,14 +130,18 @@ function renderInteractionBody(type) {
 }
 
 function hideAllInteractionBody() {
-  bodyInteractionItem.forEach(item => {
+  bodyInteractionItem.forEach((item) => {
     if (!item.classList.contains('body-interaction-content')) {
       item.classList.add('body-interaction-content');
     }
-  })
+  });
 }
 
-const time = (new Date()).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+const time = new Date().toLocaleString('en-US', {
+  hour: 'numeric',
+  minute: 'numeric',
+  hour12: true,
+});
 document.querySelector('.time-web-room').textContent = time;
 
 const linkRoom = document.querySelector('.interaction-info-link');
@@ -140,10 +151,9 @@ const copyLinkBtn = document.querySelector('.interaction-info-copy-link-btn');
 copyLinkBtn.onclick = () => {
   navigator.clipboard.writeText(window.location.href);
 
-  var tooltip = document.getElementById("myTooltip");
-  tooltip.innerHTML = "Copied to clipboard";
+  var tooltip = document.getElementById('myTooltip');
+  tooltip.innerHTML = 'Copied to clipboard';
   setTimeout(() => {
-    tooltip.innerHTML = "Copy to clipboard";
+    tooltip.innerHTML = 'Copy to clipboard';
   }, 1000);
-}
-
+};

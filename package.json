@@ -20,12 +20,14 @@
     "socket.io": "^2.4.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.6"
+    "nodemon": "^2.0.6",
+    "prettier": "2.5.1"
   },
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write ."
   },
   "author": "",
   "license": "ISC"

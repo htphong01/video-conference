@@ -1,7 +1,7 @@
 class SiteController {
   index(req, res, next) {
     const user = req.session?.passport?.user || req.session?.user;
-    if(user) {
+    if (user) {
       res.redirect('/meet');
     } else {
       res.render('index');
@@ -9,15 +9,15 @@ class SiteController {
   }
 
   uploadFile(req, res, next) {
-    if(req.file) {
+    if (req.file) {
       res.json({
         success: true,
-        file: req.file
+        file: req.file,
       });
     } else {
       res.json({
-        success: false
-      })
+        success: false,
+      });
     }
   }
 }

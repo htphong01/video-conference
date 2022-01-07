@@ -7,11 +7,23 @@ class AuthService {
       const data = await User.findOne({ email: email });
       const hashPassword = await bcryptFunction.hashPassword(password);
       if (data) return { success: false, message: 'Email is already in use!' };
-      const user = await User.create({ displayName, email, password: hashPassword });
+      const user = await User.create({
+        displayName,
+        email,
+        password: hashPassword,
+      });
       user.password = undefined;
-      return { success: true, message: 'Create new user successful', user };
+      return {
+        success: true,
+        message: 'Create new user successful',
+        user,
+      };
     } catch (error) {
-      return { success: false, message: 'An error occurred please try again!', error };
+      return {
+        success: false,
+        message: 'An error occurred please try again!',
+        error,
+      };
     }
   }
 
@@ -19,7 +31,10 @@ class AuthService {
     try {
       const data = await User.findOne({ email: email });
       if (data) {
-        const isValidPassword = await bcryptFunction.comparePassword(password, data.password);
+        const isValidPassword = await bcryptFunction.comparePassword(
+          password,
+          data.password
+        );
         if (isValidPassword) {
           data.password = undefined;
           return { success: true, user: data };
@@ -29,7 +44,11 @@ class AuthService {
         return { success: false, message: 'User is not exist!' };
       }
     } catch (error) {
-      return { success: false, message: 'An error occurred please try again', error };
+      return {
+        success: false,
+        message: 'An error occurred please try again',
+        error,
+      };
     }
   }
 }

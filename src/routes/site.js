@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const siteController = require('../app/controllers/SiteController');
 
-const multer  = require('multer')
-const fileStorageUpload = require('../storage/fileUploadStorage')
-const upload = multer({ storage: fileStorageUpload })
+const multer = require('multer');
+const fileStorageUpload = require('../storage/fileUploadStorage');
+const upload = multer({ storage: fileStorageUpload });
 
 router.get('/', siteController.index);
 
