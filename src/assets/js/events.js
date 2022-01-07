@@ -8,17 +8,16 @@ window.addEventListener( 'load', () => {
         let roomName = document.querySelector( '#room-name' ).value;
         let yourName = document.querySelector( '#your-name' ).value;
 
-        document.title = roomName;
-
         if ( roomName && yourName ) {
             //remove error message, if any
             document.querySelector('#err-msg').innerText = "";
 
             //save the user's name in sessionStorage
             sessionStorage.setItem( 'username', yourName );
+            sessionStorage.setItem( 'roomName', roomName );
 
             //create room link
-            let roomLink = `${ location.origin }/meet?room=${ helpers.generateRandomString() }`;
+            let roomLink = `${ location.origin }/meet?room=${ uuidv4() }`;
             window.location.replace(roomLink);
             document.querySelector( '#room-name' ).value = '';
             document.querySelector( '#your-name' ).value = '';

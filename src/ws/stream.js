@@ -30,6 +30,10 @@ const stream = ( socket ) => {
         socket.to( data.room ).emit( 'chat', { sender: data.sender, msg: data.msg, type: data.type } );
     } );
 
+    socket.on('drawing', ({room,...data}) => {
+        socket.to(room).emit('drawing', data)
+    });
+
 };
 
 module.exports = stream;

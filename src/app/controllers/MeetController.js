@@ -18,6 +18,15 @@ class MeetController {
       res.redirect('/');
     }
   }
+
+  whiteboard(req, res, next) {
+    const user = req.session?.passport?.user || req.session?.user;
+    if(user) {
+      res.render('whiteboard', { user });
+    } else {
+      res.redirect('/');
+    }
+  }
 }
 
 module.exports = new MeetController();

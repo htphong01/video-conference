@@ -44,7 +44,7 @@ function closeBodyInteraction() {
 
 interactionControlBtn.forEach((interactBtn, index) => {
   interactBtn.onclick = function () {
-    
+
     switch (index) {
       case 0:
         renderInteractionBody('details');
@@ -133,13 +133,13 @@ function hideAllInteractionBody() {
 const time = (new Date()).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
 document.querySelector('.time-web-room').textContent = time;
 
-const linkRoom =  document.querySelector('.interaction-info-link');
+const linkRoom = document.querySelector('.interaction-info-link');
 linkRoom.innerHTML = window.location.href;
 
 const copyLinkBtn = document.querySelector('.interaction-info-copy-link-btn');
 copyLinkBtn.onclick = () => {
   navigator.clipboard.writeText(window.location.href);
-  
+
   var tooltip = document.getElementById("myTooltip");
   tooltip.innerHTML = "Copied to clipboard";
   setTimeout(() => {
