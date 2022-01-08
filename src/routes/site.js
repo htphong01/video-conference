@@ -8,6 +8,8 @@ const upload = multer({ storage: fileStorageUpload });
 
 router.get('/', siteController.index);
 
+router.get('/notfound', siteController.notFound);
+
 router.post('/upload-file', upload.single('file'), siteController.uploadFile);
 
 module.exports = router;

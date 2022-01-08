@@ -2,7 +2,7 @@ import helpers from './helpers.js';
 
 window.addEventListener('load', () => {
   //When the 'Create room" is button is clicked
-  document.getElementById('create-room').addEventListener('click', (e) => {
+  document.getElementById('create-room').addEventListener('click', async (e) => {
     e.preventDefault();
 
     let roomName = document.querySelector('#room-name').value;
@@ -17,10 +17,18 @@ window.addEventListener('load', () => {
       sessionStorage.setItem('roomName', roomName);
 
       //create room link
-      let roomLink = `${location.origin}/meet?room=${uuidv4()}`;
-      window.location.replace(roomLink);
-      document.querySelector('#room-name').value = '';
-      document.querySelector('#your-name').value = '';
+      const roomId = uuidv4();
+      let roomLink = `${location.origin}/meet?room=${roomId}`;
+      const { data } = await axios.post('/meet', {
+        roomId: roomId,
+        roomName: roomName
+      })
+      console.log(data);
+      if (data.success) {
+        window.location.replace(roomLink);
+        document.querySelector('#room-name').value = '';
+        document.querySelector('#your-name').value = '';
+      }
     } else {
       document.querySelector('#err-msg').innerText = 'All fields are required';
     }

@@ -1,13 +1,34 @@
 import h from './helpers.js';
 
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
   const room = h.getQString(location.href, 'room');
   const username = sessionStorage.getItem('username');
+
+  if (room) {
+    const { data } = await axios.get(`/meet/${room}`);
+    if (!data.success) {
+      window.location.replace('/notfound');
+      return;
+    } else {
+      document.title = data.room.roomName;
+    }
+  }
 
   if (!room) {
     document.querySelectorAll('.tablinks')[0].click();
   } else if (!username) {
     document.querySelectorAll('.tablinks')[1].click();
+    let socket = io('/stream');
+    socket.on('connect', () => {
+      socket.emit('ready', { room, socketId: socket.io.engine.id });
+      socket.on('roomStatus', ({ isFull, length }) => {
+        if(isFull) {
+          document.querySelector('#enter-room').disabled = true;
+          document.querySelector('#maximum-error').innerHTML = `This meeting has reached a maximum of ${length} participants. Please try again later.`
+          document.querySelector('#maximum-error').style.display = 'block';
+        }
+      });
+    })
   } else {
     let commElem = document.getElementsByClassName('room-comm');
     document.querySelector('.control-navbar').classList.add('d-flex');
@@ -18,7 +39,6 @@ window.addEventListener('load', () => {
     }
 
     var pc = [];
-
     let socket = io('/stream');
 
     var socketId = '';
@@ -35,10 +55,19 @@ window.addEventListener('load', () => {
       //set socketId
       socketId = socket.io.engine.id;
 
-      socket.emit('subscribe', {
-        room: room,
-        socketId: socketId,
+      socket.emit('ready', { room, socketId: socket.io.engine.id });
+      socket.on('roomStatus', ({ isFull }) => {
+        if(isFull) {
+          window.location.replace('/meet');
+        } else {
+          socket.emit('subscribe', {
+            room: room,
+            socketId: socketId,
+          });
+        }
       });
+
+      
 
       socket.on('new user', (data) => {
         socket.emit('newUserStart', {
@@ -57,8 +86,8 @@ window.addEventListener('load', () => {
       socket.on('ice candidates', async (data) => {
         data.candidate
           ? await pc[data.sender].addIceCandidate(
-              new RTCIceCandidate(data.candidate)
-            )
+            new RTCIceCandidate(data.candidate)
+          )
           : '';
       });
 
@@ -66,8 +95,8 @@ window.addEventListener('load', () => {
         if (data.description.type === 'offer') {
           data.description
             ? await pc[data.sender].setRemoteDescription(
-                new RTCSessionDescription(data.description)
-              )
+              new RTCSessionDescription(data.description)
+            )
             : '';
 
           h.getUserFullMedia()
@@ -361,7 +390,6 @@ window.addEventListener('load', () => {
       });
 
       mediaRecorder.start(1000);
-      toggleRecordingIcons(true);
 
       mediaRecorder.ondataavailable = function (e) {
         recordedStream.push(e.data);
@@ -463,13 +491,17 @@ window.addEventListener('load', () => {
     });
 
     //When record button is clicked
-    document.getElementById('record').addEventListener('click', (e) => {
-      /**
-       * Ask user what they want to record.
-       * Get the stream based on selection and start recording
-       */
+    document.getElementById('record').addEventListener('click', async function (e) {
+
+      if (this.classList.contains('record-active')) {
+        this.classList.remove('record-active');
+        mediaRecorder.stop();
+      } else {
+        this.classList.add('record-active');
+      }
+
       if (!mediaRecorder || mediaRecorder.state == 'inactive') {
-        h.toggleModal('recording-options-modal', true);
+        document.getElementById('record-video').click();
       } else if (mediaRecorder.state == 'paused') {
         mediaRecorder.resume();
       } else if (mediaRecorder.state == 'recording') {
@@ -488,14 +520,12 @@ window.addEventListener('load', () => {
           .then((screenStream) => {
             startRecording(screenStream);
           })
-          .catch(() => {});
+          .catch(() => { });
       }
     });
 
     //When user choose to record own video
     document.getElementById('record-video').addEventListener('click', () => {
-      h.toggleModal('recording-options-modal', false);
-
       if (myStream && myStream.getTracks().length) {
         startRecording(myStream);
       } else {
@@ -503,7 +533,7 @@ window.addEventListener('load', () => {
           .then((videoStream) => {
             startRecording(videoStream);
           })
-          .catch(() => {});
+          .catch(() => { });
       }
     });
   }

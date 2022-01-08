@@ -157,3 +157,17 @@ copyLinkBtn.onclick = () => {
     tooltip.innerHTML = 'Copy to clipboard';
   }, 1000);
 };
+
+document.querySelector('#addUserBtn').onclick = async () => {
+  const email = document.querySelector('.addUserInput').value;
+  if(email) {
+    const { data } = await axios.post('/meet/invite', {
+      email,
+      url: window.location.href
+    })
+
+    if(data.success) {
+      document.querySelector('.addUserInput').value = '';
+    }
+  }
+}

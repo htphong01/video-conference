@@ -1,4 +1,17 @@
+const rooms = {
+
+}
+
 const stream = (socket) => {
+  socket.on('ready', ({ room, socketId }) => {
+    console.log(socketId);
+    if (socket.adapter.rooms[room] && socket.adapter.rooms[room].length === 20) {
+      socket.emit('roomStatus', { isFull: true, length: socket.adapter.rooms[room].length });
+    } else {
+      socket.emit('roomStatus', { isFull: false, length: 0 });
+    }
+  });
+
   socket.on('subscribe', (data) => {
     //subscribe/join a room
     socket.join(data.room);

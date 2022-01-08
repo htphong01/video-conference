@@ -1,4 +1,5 @@
 const axios = require('axios').default;
+const meetService = require('../services/MeetService');
 
 class MeetController {
   async index(req, res, next) {
@@ -19,6 +20,18 @@ class MeetController {
     }
   }
 
+  async create(req, res, next) {
+    const user = req.session?.passport?.user || req.session?.user;
+    const creator = user.id || user._id;
+    const result = await meetService.createNewMeet({...req.body, creator });
+    res.json(result);
+  }
+
+  async show(req, res, next) {
+    const result = await meetService.findRoomByRoomId(req.params.id);
+    res.json(result);
+  }
+
   whiteboard(req, res, next) {
     const user = req.session?.passport?.user || req.session?.user;
     if (user) {
@@ -26,6 +39,11 @@ class MeetController {
     } else {
       res.redirect('/');
     }
+  }
+
+  async invite(req, res, next) {
+    const result = await meetService.invite(req.body);
+    res.json(result);
   }
 }
 

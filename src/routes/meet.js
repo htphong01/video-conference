@@ -3,7 +3,10 @@ const router = express.Router();
 const meetController = require('../app/controllers/MeetController');
 
 router.get('/', meetController.index);
-
+router.post('/', meetController.create);
 router.get('/whiteboard', meetController.whiteboard);
+router.get('/:id', meetController.show);
+router.post('/invite', meetController.invite);
+
 
 module.exports = router;
