@@ -35,6 +35,20 @@ class MeetService {
       });
     }
   }
+
+  async checkOwner({ roomId, creator }) {
+    try {
+      const data = await Meet.findOne({roomId, creator});
+      if(data) return { success: true }
+      return { success: false }
+    } catch (err) {
+      return ({
+        success: false,
+        message: "An error has occurred. Please try again!",
+      });
+    }
+  }
+
 }
 
 module.exports = new MeetService();

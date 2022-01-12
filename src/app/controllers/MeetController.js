@@ -14,6 +14,7 @@ class MeetController {
       } else if (user.provider === 'linkedin') {
         user.avatar = user.photos[0].value;
       }
+      user.id = user.id || user._id;
       res.render('meet', { user });
     } else {
       res.redirect('/');
@@ -45,6 +46,12 @@ class MeetController {
     const result = await meetService.invite(req.body);
     res.json(result);
   }
+
+  async checkOwner(req, res, next) {
+    const result = await meetService.checkOwner(req.body);
+    res.json(result);
+  }
+
 }
 
 module.exports = new MeetController();

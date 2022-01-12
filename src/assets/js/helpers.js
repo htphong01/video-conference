@@ -192,8 +192,8 @@ export default {
   replaceTrack(stream, recipientPeer) {
     let sender = recipientPeer.getSenders
       ? recipientPeer
-          .getSenders()
-          .find((s) => s.track && s.track.kind === stream.kind)
+        .getSenders()
+        .find((s) => s.track && s.track.kind === stream.kind)
       : false;
 
     sender ? sender.replaceTrack(stream) : '';
@@ -258,6 +258,80 @@ export default {
     }
   },
 
+  async checkIsHost() {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const roomId = Object.fromEntries(urlSearchParams.entries()).room;
+    const creator = document.querySelector('#auth-user-id').value;
+    if (roomId && creator) {
+      const { data } = await axios.post('/meet/check-owner', {
+        roomId,
+        creator
+      });
+      return data;
+    }
+    return { success: false };
+  },
+
+  renderUserInRoom(users, socketId, isHost) {
+    const ulListUserElement = document.querySelector('.interaction-people-list');
+    ulListUserElement.innerHTML = '';
+    users.forEach(user => {
+      const liElement = document.createElement('li');
+      liElement.className = 'interaction-people-item';
+      const userInfoDiv = document.createElement('div');
+      const imgUser = document.createElement('img');
+      imgUser.src = user.avatar;
+      imgUser.className = 'interaction-people-avatar';
+      const spanName = document.createElement('span');
+      spanName.className = 'interaction-people-name';
+      spanName.innerHTML = (user.socketId === socketId) ? `${user.username} (You)` : user.username;
+      userInfoDiv.appendChild(imgUser);
+      userInfoDiv.appendChild(spanName);
+      liElement.appendChild(userInfoDiv);
+
+      if (user.socketId === socketId) {
+        const controlDiv = document.createElement('div');
+        controlDiv.className = 'control-icon-wrap rename';
+        controlDiv.addEventListener('click', function() {
+          document.querySelector('#rename-modal').click();
+        });
+
+        const controlSpan = document.createElement('span');
+        controlSpan.innerHTML = 'Rename';
+
+        const controlChildDiv = document.createElement('div');
+        const controlIcon = document.createElement('i');
+        controlIcon.className = 'fas fa-chevron-right';
+        controlChildDiv.appendChild(controlIcon);
+
+        controlDiv.appendChild(controlSpan);
+        controlDiv.appendChild(controlChildDiv);
+
+        liElement.appendChild(controlDiv);
+      } else if(isHost) {
+        const controlDiv = document.createElement('div');
+        controlDiv.className = 'control-icon-wrap mute';
+        controlDiv.setAttribute("data-id", user.socketId);
+        const controlSpan = document.createElement('span');
+        controlSpan.innerHTML = 'Mute';
+
+        const controlChildDiv = document.createElement('div');
+        const controlIcon = document.createElement('i');
+        controlIcon.className = 'fas fa-chevron-right';
+        controlChildDiv.appendChild(controlIcon);
+
+        controlDiv.appendChild(controlSpan);
+        controlDiv.appendChild(controlChildDiv);
+
+        
+
+        liElement.appendChild(controlDiv);
+      }
+
+      ulListUserElement.appendChild(liElement);
+    });
+  },
+
   setLocalStream(stream, mirrorMode = true) {
     const localVidElem = document.getElementById('local');
 
@@ -274,18 +348,18 @@ export default {
       totalRemoteVideosDesktop <= 2
         ? '50%'
         : totalRemoteVideosDesktop == 3
-        ? '33.33%'
-        : totalRemoteVideosDesktop <= 8
-        ? '25%'
-        : totalRemoteVideosDesktop <= 15
-        ? '20%'
-        : totalRemoteVideosDesktop <= 18
-        ? '16%'
-        : totalRemoteVideosDesktop <= 23
-        ? '15%'
-        : totalRemoteVideosDesktop <= 32
-        ? '12%'
-        : '10%';
+          ? '33.33%'
+          : totalRemoteVideosDesktop <= 8
+            ? '25%'
+            : totalRemoteVideosDesktop <= 15
+              ? '20%'
+              : totalRemoteVideosDesktop <= 18
+                ? '16%'
+                : totalRemoteVideosDesktop <= 23
+                  ? '15%'
+                  : totalRemoteVideosDesktop <= 32
+                    ? '12%'
+                    : '10%';
 
     for (let i = 0; i < totalRemoteVideosDesktop; i++) {
       elem[i].style.width = newWidth;

@@ -127,6 +127,13 @@
   font-size: 14px;
 }
 
+.body-interaction-people {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 .interaction-people-search-block {
   height: 56px;
   margin: 4px 12px;
@@ -139,7 +146,7 @@
 }
 
 .interaction-people-search-block.focus {
-  border: 2px solid #1a73e8;
+  border: 1px solid #1a73e8;
 }
 
 .interaction-people-search-block i {
@@ -159,6 +166,12 @@
   font-size: 16px;
 }
 
+.interaction-people-block {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
 .interaction-people-block > h2 {
   margin-bottom: 4px;
   margin-top: 12px;
@@ -174,15 +187,25 @@
   padding-left: 0;
   margin-left: 12px;
   margin-right: 16px;
+  overflow: hidden;
+  overflow-y: scroll;
+  flex: 1;
+}
+
+.interaction-people-list::-webkit-scrollbar {
+  display: none;
 }
 
 .interaction-people-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 8px 0;
+  position: relative;
+  cursor: pointer;
 }
 
-.interaction-people-item div {
+.interaction-people-item > div {
   display: flex;
   align-items: center;
 }
@@ -391,4 +414,36 @@
 
 .room-control-btn.record-active > i {
   color: red !important;
+}
+
+.interaction-people-item:hover .control-icon-wrap {
+  display: flex !important;
+}
+
+.control-icon-wrap {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translateY(50%);
+  transition: all 0.3s ease !important;
+  background: #466182;
+  color: white;
+  padding: 0 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  display: none !important;
+}
+
+.control-icon-wrap i {
+  font-size: 12px;
+  margin-left: 7px;
+}
+
+#renameInput {
+  width: 100%;
+  border: 1px solid #ddd;
+  padding: 8px 12px;
 }

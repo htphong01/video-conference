@@ -56,31 +56,46 @@ window.addEventListener('load', async () => {
       socketId = socket.io.engine.id;
 
       socket.emit('ready', { room, socketId: socket.io.engine.id });
+
       socket.on('roomStatus', ({ isFull }) => {
         if(isFull) {
           window.location.replace('/meet');
         } else {
+          const avatar = document.querySelector('.img-avatar-mail').src;
+          const info = {
+            socketId,
+            username,
+            avatar
+          }
           socket.emit('subscribe', {
             room: room,
             socketId: socketId,
+            info
           });
         }
       });
 
-      
+      socket.on('usersInRoom', async data => {
+        const hostUser = JSON.parse(JSON.stringify(data[socketId]));
+        delete data[socketId];
+        const users = Object.values({socketId: hostUser,...data});
+        const isHost = await h.checkIsHost();
+        h.renderUserInRoom(users, socketId, isHost.success, socket);
+      })
 
       socket.on('new user', (data) => {
         socket.emit('newUserStart', {
           to: data.socketId,
           sender: socketId,
+          username: username
         });
         pc.push(data.socketId);
-        init(true, data.socketId);
+        init(true, data.socketId, data.username);
       });
 
       socket.on('newUserStart', (data) => {
         pc.push(data.sender);
-        init(false, data.sender);
+        init(false, data.sender, data.username);
       });
 
       socket.on('ice candidates', async (data) => {
@@ -194,7 +209,7 @@ window.addEventListener('load', async () => {
       h.addChat(data, 'local');
     }
 
-    function init(createOffer, partnerName) {
+    function init(createOffer, partnerName, username) {
       pc[partnerName] = new RTCPeerConnection(h.getIceServer());
 
       if (screen && screen.getTracks().length) {
@@ -267,7 +282,7 @@ window.addEventListener('load', async () => {
 
           let usernameDiv = document.createElement('div');
           usernameDiv.className = 'user-name';
-          usernameDiv.innerHTML = `${partnerName}`;
+          usernameDiv.innerHTML = `${username || partnerName}`;
 
           //create a new div for card
           let cardDiv = document.createElement('div');
@@ -536,5 +551,12 @@ window.addEventListener('load', async () => {
           .catch(() => { });
       }
     });
+
+    document.querySelector('#renameBtn').onclick = () => {
+      const newName = document.querySelector('#renameInput').value;
+      if(!newName) return;
+      socket.emit('rename', { room, username: newName });
+      document.querySelector('#renameCancelBtn').click();
+    }
   }
 });

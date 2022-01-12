@@ -7,6 +7,7 @@ router.post('/', meetController.create);
 router.get('/whiteboard', meetController.whiteboard);
 router.get('/:id', meetController.show);
 router.post('/invite', meetController.invite);
+router.post('/check-owner', meetController.checkOwner);
 
 
 module.exports = router;

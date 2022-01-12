@@ -70,6 +70,7 @@
 								<div class="name-mail-user">
 									<%= user.displayName %>
 								</div>
+								<input value="<%= user.id %>" hidden  id="auth-user-id"/>
 								<!-- <div class="change-mail-user">
                                     <a href="#" class="link-mail-user">Switch Accounts</a>
                                 </div> -->
@@ -160,18 +161,6 @@
 				</div>
 			</div>
 
-			<!-- <div class="col-md-3 chat-col d-print-none mb-2 bg-info" id='chat-pane' hidden>
-				<div class="row">
-					<div class="col-12 text-center h2 mb-3">CHAT</div>
-				</div>
-
-				<div id='chat-messages'></div>
-
-				<div class="row">
-					<textarea id='chat-input' class="form-control rounded-0 chat-box border-info" rows='3'
-						placeholder="Type here..."></textarea>
-				</div>
-			</div> -->
 			<div class="col-md-3 body-interaction close">
 				<div class="body-interaction-heading">
 					<div class="body-interaction-title">
@@ -207,19 +196,28 @@
 					<div class="interaction-people-block">
 						<h2>In call</h2>
 						<ul class="interaction-people-list">
-							<!-- <li class="interaction-people-item">
+							<li class="interaction-people-item">
                 <div>
                   <img src="https://lh3.googleusercontent.com/a/AATXAJxKI9kG7COmDjvrHmOfM9CR3q-51QsnalnPdpBF=s192-c-mo" alt="" class="interaction-people-avatar">
-                  <div class="interaction-user-avatar" ><span>H</span></div>
                   <span class="interaction-people-name">
                     Huyền Nguyễn Thị Cẩm (You)
                   </span>
                 </div>
+              </li>
+							<li class="interaction-people-item">
                 <div>
-                  <img class="interaction-people-micro"  src="./assets/images/micro-off-dark.svg" alt="">
-                  <i class="fas fa-thumbtack"></i>
+                  <img src="https://lh3.googleusercontent.com/a/AATXAJxKI9kG7COmDjvrHmOfM9CR3q-51QsnalnPdpBF=s192-c-mo" alt="" class="interaction-people-avatar">
+                  <span class="interaction-people-name">
+                    Huyền Nguyễn Thị Cẩm (You)
+                  </span>
                 </div>
-              </li> -->
+                <div class="control-icon-wrap" >
+                  <span>Rename</span>
+									<div>
+										<i class="fas fa-chevron-right"></i>
+									</div>
+                </div>
+              </li>
 
 						</ul>
 					</div>
@@ -350,6 +348,29 @@
 			</div>
 		</div>
 	</div>
+
+	<button hidden type="button" class="btn btn-primary" data-toggle="modal" id="rename-modal" data-target="#renameModal"></button>
+
+	<div class="modal fade" tabindex="-1" id="renameModal" role="dialog" aria-labelledby="renameModal" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Enter a new screen name:</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<input id="renameInput" placeholder="Enter new username" />
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" id="renameCancelBtn" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" id="renameBtn" >Rename</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
 		crossorigin="anonymous"></script>
