@@ -67,7 +67,7 @@
 }
 
 .body-interaction-content {
-  display: none;
+  display: none !important;
 }
 
 .body-interaction-title {
@@ -446,4 +446,10 @@
   width: 100%;
   border: 1px solid #ddd;
   padding: 8px 12px;
+}
+
+.register-error {
+  color: green;
+  font-size: 14px;
+  display: none;
 }

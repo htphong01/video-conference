@@ -272,7 +272,7 @@ export default {
     return { success: false };
   },
 
-  renderUserInRoom(users, socketId, isHost) {
+  renderUserInRoom(users, socketId, isHost, socket) {
     const ulListUserElement = document.querySelector('.interaction-people-list');
     ulListUserElement.innerHTML = '';
     users.forEach(user => {
@@ -312,6 +312,11 @@ export default {
         const controlDiv = document.createElement('div');
         controlDiv.className = 'control-icon-wrap mute';
         controlDiv.setAttribute("data-id", user.socketId);
+
+        controlDiv.addEventListener('click', function() {
+          socket.emit('mute', { to: user.socketId });
+        });
+
         const controlSpan = document.createElement('span');
         controlSpan.innerHTML = 'Mute';
 
@@ -322,8 +327,6 @@ export default {
 
         controlDiv.appendChild(controlSpan);
         controlDiv.appendChild(controlChildDiv);
-
-        
 
         liElement.appendChild(controlDiv);
       }

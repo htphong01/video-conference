@@ -80,6 +80,8 @@ window.addEventListener('load', async () => {
         delete data[socketId];
         const users = Object.values({socketId: hostUser,...data});
         const isHost = await h.checkIsHost();
+        sessionStorage.setItem('users', JSON.stringify(users));
+
         h.renderUserInRoom(users, socketId, isHost.success, socket);
       })
 
@@ -149,6 +151,14 @@ window.addEventListener('load', async () => {
 
       socket.on('chat', (data) => {
         h.addChat(data, 'remote');
+      });
+
+      socket.on('mute', () => {
+        console.log('mute');
+        let elem = document.getElementById('toggle-mute');
+        if(elem.classList.contains('active')) return;
+        elem.click();
+        document.querySelector('#notificationModalBtn').click();
       });
     });
 

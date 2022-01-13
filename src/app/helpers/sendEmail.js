@@ -71,9 +71,9 @@ const sendInviteEmail = async (email, url) => {
   });
 
   let info = await transporter.sendMail({
-    from: `"Video conference" <cty.hotjob2020@gmail.com>`,
+    from: `"Video conference" <videoconference@gmail.com>`,
     to: `${email}`,
-    subject: "[OBDD] Please reset your password",
+    subject: "[VideoConference] Inviting to join an online meeting",
     html: emailContent,
   });
 }

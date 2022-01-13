@@ -160,14 +160,19 @@ copyLinkBtn.onclick = () => {
 
 document.querySelector('#addUserBtn').onclick = async () => {
   const email = document.querySelector('.addUserInput').value;
-  if(email) {
+  if (email) {
     const { data } = await axios.post('/meet/invite', {
       email,
       url: window.location.href
     })
 
-    if(data.success) {
+    if (data.success) {
       document.querySelector('.addUserInput').value = '';
+      document.querySelector('#invited-label').style.display = 'block';
     }
   }
 }
+
+document.querySelector('#exampleModal').addEventListener('shown.bs.modal', function () {
+  document.querySelector('#invited-label').style.display = 'none';
+})
