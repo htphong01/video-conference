@@ -50,6 +50,19 @@ class MeetService {
     }
   }
 
+  async getAllMeetOfUser(creator) {
+    try {
+      const data = await Meet.find({ creator });
+      return { success: true, meets: data };
+    } catch (error) {
+      console.log('get all meet of users: ', error);
+      return ({
+        success: false,
+        message: "An error has occurred. Please try again!",
+      });
+    }
+  }
+
 }
 
 module.exports = new MeetService();

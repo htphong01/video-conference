@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/profile.css">
+</head>
+
+<body>
+  <div class="app">
+    <div class="app-header d-flex align-items-center justify-content-between">
+      <div class="font-weight-bold">
+        <a href="/" class="text-white app-logo-link">
+          <img src="assets/images/logo.png" alt="Logo" />
+        </a>
+      </div>
+    </div>
+
+    <div class="app-body">
+      <div class="row">
+        <div class="col-sm-4 ">
+          <div class="d-flex flex-column align-items-center justify-content-center user-profile">
+            <img src="<%= user.avatar %>" alt="" class="img-avatar">
+            <div class="username">
+              <%= user.displayName %>
+            </div>
+            <div class="email">
+              <%= user.email %>
+            </div>
+            <div class="email">
+              Joined: <%= (new Date(user.createdAt)).toDateString() %>
+            </div>
+            <div class="email">
+              Hosted: <%= meets.length %> rooms
+            </div>
+            <div class="edit-profile-btn">
+              <i class="fas fa-user-edit"></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <div class="pr-4">
+            <div class="card">
+              <h5 class="card-header"><b>Meets</b></h5>
+              <div class="card-body">
+                <table class="table table-bordered mr-4">
+                  <thead>
+                    <tr>
+                      <th scope="col" class="text-center">No.</th>
+                      <th scope="col">Room's name</th>
+                      <th scope="col" colspan="2" class="text-center">Handle</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% meets.forEach((room, index)=> {%>
+                      <tr>
+                        <th scope="row" class="text-center" style="width: 10%">
+                          <%= index + 1 %>
+                        </th>
+                        <td style="width: 65%">
+                          <input value="<%= room.roomName %>" data-id="<%= room.roomId %>"
+                            id="inputRoomName-<%= room.roomId%>" class="input-change-name-room" />
+                          <span class="room-name" data-id="<%= room.roomId %>" id="roomName-<%= room.roomId%>">
+                            <%= room.roomName %>
+                          </span>
+                        </td>
+                        <td class="text-center" style="width: 15%">
+                          <a href="/meet?room=<%= room.roomId %>" target="_blank"
+                            class="join-btn btn btn-primary">Join</a>
+                        </td>
+                        <td class="text-center" style="width: 15%">
+                          <a href="#" class="delete-btn btn btn-danger">Delete</a>
+                        </td>
+                      </tr>
+                    <% }) %>
+                    <% meets.forEach((room, index)=> {%>
+                      <tr>
+                        <th scope="row" class="text-center" style="width: 10%">
+                          <%= index + 1 %>
+                        </th>
+                        <td style="width: 65%">
+                          <input value="<%= room.roomName %>" data-id="<%= room.roomId %>"
+                            id="inputRoomName-<%= room.roomId%>" class="input-change-name-room" />
+                          <span class="room-name" data-id="<%= room.roomId %>" id="roomName-<%= room.roomId%>">
+                            <%= room.roomName %>
+                          </span>
+                        </td>
+                        <td class="text-center" style="width: 15%">
+                          <a href="/meet?room=<%= room.roomId %>" target="_blank"
+                            class="join-btn btn btn-primary">Join</a>
+                        </td>
+                        <td class="text-center" style="width: 15%">
+                          <a href="#" class="delete-btn btn btn-danger">Delete</a>
+                        </td>
+                      </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+                <button>Pagination</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    var meets = '<%- JSON.stringify(meets) %>'
+    console.log(JSON.parse(meets));       
+  </script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script src='assets/js/profile.js'></script>
+</body>
+
+</html>
