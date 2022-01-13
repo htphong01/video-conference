@@ -29,6 +29,7 @@ class MeetService {
         message: "Email has been sent!",
       });
     } catch (error) {
+      console.log(error)
       return ({
         success: false,
         message: "An error has occurred. Please try again!",
