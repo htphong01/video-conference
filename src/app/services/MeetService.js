@@ -23,7 +23,7 @@ class MeetService {
 
   async invite({ email, url }) {
     try {
-      sendInviteEmail(email, url);
+      await sendInviteEmail(email, url);
       return ({
         success: true,
         message: "Email has been sent!",
