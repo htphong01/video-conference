@@ -63,6 +63,19 @@ class MeetService {
     }
   }
 
+  async update(userId, { roomId, ...data }) {
+    try {
+      const meet = await Meet.findOneAndUpdate({ creator: userId, roomId }, data);
+      return { success: true };
+    } catch (error) {
+      return ({
+        success: false,
+        message: "An error has occurred. Please try again!",
+        error
+      });
+    }
+  }
+
 }
 
 module.exports = new MeetService();

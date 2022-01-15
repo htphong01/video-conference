@@ -2,6 +2,10 @@ function checkImageFile(url) {
   return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
 }
 
+function getExtOfFile(url) {
+  return filename.substring(filename.lastIndexOf('.')+1, filename.length) || "";
+}
+
 export default {
   generateRandomString() {
     const crypto = window.crypto || window.msCrypto;

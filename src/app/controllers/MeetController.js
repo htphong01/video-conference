@@ -24,7 +24,7 @@ class MeetController {
   async create(req, res, next) {
     const user = req.session?.passport?.user || req.session?.user;
     const creator = user.id || user._id;
-    const result = await meetService.createNewMeet({...req.body, creator });
+    const result = await meetService.createNewMeet({ ...req.body, creator });
     res.json(result);
   }
 
@@ -51,6 +51,18 @@ class MeetController {
     const result = await meetService.checkOwner(req.body);
     res.json(result);
   }
+
+  async update(req, res, next) {
+    const user = req.session?.passport?.user || req.session?.user;
+    if (user) {
+      const userId = user.id || user._id;
+      const result = await meetService.update(userId, req.body);
+      res.json(result);
+    } else {
+      res.json({ success: false, message: 'Invalid user' });
+    }
+  }
+
 
 }
 

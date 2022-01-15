@@ -66,6 +66,7 @@ input:focus {
   width: 200px;
   border-radius: 50%;
   border: 1px solid #ddd;
+  object-fit: cover;
 }
 
 .username {
@@ -89,12 +90,12 @@ input:focus {
 .edit-profile-btn {
   position: absolute;
   top: 32px;
-  right: 32px;
+  left: 32px;
 }
 
-.edit-profile-btn > i {
+.edit-profile-btn i {
   color: #000;
-  font-size: 20px;
+  font-size: 32px;
   cursor: pointer;
 }
 

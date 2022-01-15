@@ -40,9 +40,14 @@
             <div class="email">
               Hosted: <%= meets.length %> rooms
             </div>
+            <% if(user._id) {%>
             <div class="edit-profile-btn">
-              <i class="fas fa-user-edit"></i>
+              <label for="user-avatar-input" >
+                <i class="fas fa-camera-retro"></i>
+              </label>
+              <input hidden id="user-avatar-input" type="file" accept="image/*" />
             </div>
+            <% } %>
           </div>
         </div>
         <div class="col-sm-8">
@@ -80,30 +85,9 @@
                         </td>
                       </tr>
                     <% }) %>
-                    <% meets.forEach((room, index)=> {%>
-                      <tr>
-                        <th scope="row" class="text-center" style="width: 10%">
-                          <%= index + 1 %>
-                        </th>
-                        <td style="width: 65%">
-                          <input value="<%= room.roomName %>" data-id="<%= room.roomId %>"
-                            id="inputRoomName-<%= room.roomId%>" class="input-change-name-room" />
-                          <span class="room-name" data-id="<%= room.roomId %>" id="roomName-<%= room.roomId%>">
-                            <%= room.roomName %>
-                          </span>
-                        </td>
-                        <td class="text-center" style="width: 15%">
-                          <a href="/meet?room=<%= room.roomId %>" target="_blank"
-                            class="join-btn btn btn-primary">Join</a>
-                        </td>
-                        <td class="text-center" style="width: 15%">
-                          <a href="#" class="delete-btn btn btn-danger">Delete</a>
-                        </td>
-                      </tr>
-                    <% }) %>
                   </tbody>
                 </table>
-                <button>Pagination</button>
+                <!-- <button>Pagination</button> -->
               </div>
             </div>
 

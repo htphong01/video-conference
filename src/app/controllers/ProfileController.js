@@ -15,6 +15,17 @@ class ProfileController {
     }
   }
 
+  async update(req, res, next) {
+    const user = req.session?.passport?.user || req.session?.user;
+    if (user) {
+      const userId = user.id || user._id;
+      const result = await profileService.update(userId, req.body);
+      res.json(result);
+    } else {
+      res.json({ success: false, message: 'Invalid user' });
+    }
+  }
+
 }
 
 module.exports = new ProfileController();

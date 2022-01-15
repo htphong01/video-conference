@@ -1,5 +1,9 @@
+const CLOUDINARY_API = 'https://api.cloudinary.com/v1_1/htphong02/upload';
+const CLOUDINARY_UPLOAD_PRESET = 'q64yqoyh';
+const CLOUDINARY_FOLDER = 'Video Conference';
 const roomName = document.querySelectorAll('.room-name');
 const inputChangeRoomName = document.querySelectorAll('.input-change-name-room');
+const inputChangeAvatar = document.querySelector('#user-avatar-input');
 
 roomName.forEach(room => {
   const roomId = room.getAttribute('data-id');
@@ -25,12 +29,38 @@ inputChangeRoomName.forEach(input => {
     }
   }
 
-  input.onkeyup = function (e) {
+  input.onkeyup = async function (e) {
     if (e.key === 'Enter' || e.keyCode === 13) {
       if (span) {
         input.style.display = 'none';
         span.style.display = 'block';
+        const roomName = input.value;
+        span.innerHTML = roomName;
+        input.value = roomName;
+        axios.put('/meet', {
+          roomId,
+          roomName
+        });
       }
     }
   }
 });
+
+inputChangeAvatar.onchange = async function (e) {
+  e.preventDefault();
+  try {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+    formData.append('folder', CLOUDINARY_FOLDER);
+    const { data } = await axios.post(CLOUDINARY_API, formData, { headers: { 'Content-type': 'multipart/form-data' }});
+    if(data?.url) {
+      document.querySelector('.img-avatar').src = data.url;
+      const { data: result } = await axios.put('/profile', { avatar: data.url });
+      console.log(result);
+    }
+  } catch (error) {
+    
+  }
+}
