@@ -86,8 +86,39 @@ const stream = (socket) => {
     socket.to(to).emit('mute', to);
   });
 
-  socket.on('drawing', ({ room, ...data }) => {
-    socket.to(room).emit('drawing', data);
+  // socket.on('drawing', ({ room, ...data }) => {
+  //   socket.to(room).emit('drawing', data);
+  // });
+  socket.on('drawing', function ({room,...data}) {
+    socket.to(room).emit('drawing', { ...data });
+  });
+
+  socket.on('rectangle', function ({room,...data}) {
+    socket.to(room).emit('rectangle', { ...data });
+  });
+
+  socket.on('linedraw', function ({room,...data}) {
+    socket.to(room).emit('linedraw', { ...data });
+  });
+
+  socket.on('circledraw', function ({room,...data}) {
+    socket.to(room).emit('circledraw', { ...data });
+  });
+
+  socket.on('ellipsedraw', function ({room,...data}) {
+    socket.to(room).emit('ellipsedraw', { ...data });
+  });
+
+  socket.on('textdraw', function ({room,...data}) {
+    socket.to(room).emit('textdraw', { ...data });
+  });
+
+  socket.on('copyCanvas', function ({room,...data}) {
+    socket.to(room).emit('copyCanvas', { ...data });
+  });
+
+  socket.on('Clearboard', function ({room,...data}) {
+    socket.to(room).emit('Clearboard', { ...data });
   });
 };
 
