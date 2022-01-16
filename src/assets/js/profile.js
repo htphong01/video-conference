@@ -59,12 +59,11 @@ inputChangeAvatar.onchange = async function (e) {
     const { data } = await axios.post(CLOUDINARY_API, formData, {
       headers: { 'Content-type': 'multipart/form-data' },
     });
-    if (data?.url) {
-      document.querySelector('.img-avatar').src = data.url;
+    if (data?.secure_url) {
+      document.querySelector('.img-avatar').src = data.secure_url;
       const { data: result } = await axios.put('/profile', {
-        avatar: data.url,
+        avatar: data.secure_url,
       });
-      console.log(result);
     }
   } catch (error) {}
 };
