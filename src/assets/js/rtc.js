@@ -22,13 +22,15 @@ window.addEventListener('load', async () => {
     socket.on('connect', () => {
       socket.emit('ready', { room, socketId: socket.io.engine.id });
       socket.on('roomStatus', ({ isFull, length }) => {
-        if(isFull) {
+        if (isFull) {
           document.querySelector('#enter-room').disabled = true;
-          document.querySelector('#maximum-error').innerHTML = `This meeting has reached a maximum of ${length} participants. Please try again later.`
+          document.querySelector(
+            '#maximum-error'
+          ).innerHTML = `This meeting has reached a maximum of ${length} participants. Please try again later.`;
           document.querySelector('#maximum-error').style.display = 'block';
         }
       });
-    })
+    });
   } else {
     let commElem = document.getElementsByClassName('room-comm');
     document.querySelector('.control-navbar').classList.add('d-flex');
@@ -58,38 +60,38 @@ window.addEventListener('load', async () => {
       socket.emit('ready', { room, socketId: socket.io.engine.id });
 
       socket.on('roomStatus', ({ isFull }) => {
-        if(isFull) {
+        if (isFull) {
           window.location.replace('/meet');
         } else {
           const avatar = document.querySelector('.img-avatar-mail').src;
           const info = {
             socketId,
             username,
-            avatar
-          }
+            avatar,
+          };
           socket.emit('subscribe', {
             room: room,
             socketId: socketId,
-            info
+            info,
           });
         }
       });
 
-      socket.on('usersInRoom', async data => {
+      socket.on('usersInRoom', async (data) => {
         const hostUser = JSON.parse(JSON.stringify(data[socketId]));
         delete data[socketId];
-        const users = Object.values({socketId: hostUser,...data});
+        const users = Object.values({ socketId: hostUser, ...data });
         const isHost = await h.checkIsHost();
         sessionStorage.setItem('users', JSON.stringify(users));
 
         h.renderUserInRoom(users, socketId, isHost.success, socket);
-      })
+      });
 
       socket.on('new user', (data) => {
         socket.emit('newUserStart', {
           to: data.socketId,
           sender: socketId,
-          username: username
+          username: username,
         });
         pc.push(data.socketId);
         init(true, data.socketId, data.username);
@@ -103,8 +105,8 @@ window.addEventListener('load', async () => {
       socket.on('ice candidates', async (data) => {
         data.candidate
           ? await pc[data.sender].addIceCandidate(
-            new RTCIceCandidate(data.candidate)
-          )
+              new RTCIceCandidate(data.candidate)
+            )
           : '';
       });
 
@@ -112,8 +114,8 @@ window.addEventListener('load', async () => {
         if (data.description.type === 'offer') {
           data.description
             ? await pc[data.sender].setRemoteDescription(
-              new RTCSessionDescription(data.description)
-            )
+                new RTCSessionDescription(data.description)
+              )
             : '';
 
           h.getUserFullMedia()
@@ -153,10 +155,19 @@ window.addEventListener('load', async () => {
         h.addChat(data, 'remote');
       });
 
+      socket.on('newVote', (data) => {
+        h.addVote(data, 'remote', room, socket);
+      });
+
+      socket.on('submitVote', ({ key, vote }) => {
+        console.log('data', key, vote);
+        $(`#${key}`).text(vote > 1 ? `(${vote} votes)` : `(${vote} vote)`);
+      });
+
       socket.on('mute', () => {
         console.log('mute');
         let elem = document.getElementById('toggle-mute');
-        if(elem.classList.contains('active')) return;
+        if (elem.classList.contains('active')) return;
         elem.click();
         document.querySelector('#notificationModalBtn').click();
       });
@@ -447,12 +458,23 @@ window.addEventListener('load', async () => {
         }
       });
 
+    // Open white board
     document.querySelector('.interaction-activity-item-info').onclick = () => {
       const url = `${window.location.origin}/meet/whiteboard?room=${uuidv4()}`;
       const msg = `Đã chia sẽ 1 whiteboard. Tham gia tại <br> <a href="${url}" style="color: blue" target="_blank">${url}</a>`;
       sendMsg(msg);
       window.open(url, '_blank');
     };
+
+    document.querySelector('.sub-menu-white-board').onclick = () => {
+      const url = `${window.location.origin}/meet/whiteboard?room=${uuidv4()}`;
+      const msg = `Đã chia sẽ 1 whiteboard. Tham gia tại <br> <a href="${url}" style="color: blue" target="_blank">${url}</a>`;
+      sendMsg(msg);
+      window.open(url, '_blank');
+    };
+
+    // create new poll
+    document.querySelector('.sub-menu-new-poll').onclick = () => {};
 
     //When the video icon is clicked
     document.getElementById('toggle-video').addEventListener('click', (e) => {
@@ -516,23 +538,24 @@ window.addEventListener('load', async () => {
     });
 
     //When record button is clicked
-    document.getElementById('record').addEventListener('click', async function (e) {
+    document
+      .getElementById('record')
+      .addEventListener('click', async function (e) {
+        if (this.classList.contains('record-active')) {
+          this.classList.remove('record-active');
+          mediaRecorder.stop();
+        } else {
+          this.classList.add('record-active');
+        }
 
-      if (this.classList.contains('record-active')) {
-        this.classList.remove('record-active');
-        mediaRecorder.stop();
-      } else {
-        this.classList.add('record-active');
-      }
-
-      if (!mediaRecorder || mediaRecorder.state == 'inactive') {
-        document.getElementById('record-video').click();
-      } else if (mediaRecorder.state == 'paused') {
-        mediaRecorder.resume();
-      } else if (mediaRecorder.state == 'recording') {
-        mediaRecorder.stop();
-      }
-    });
+        if (!mediaRecorder || mediaRecorder.state == 'inactive') {
+          document.getElementById('record-video').click();
+        } else if (mediaRecorder.state == 'paused') {
+          mediaRecorder.resume();
+        } else if (mediaRecorder.state == 'recording') {
+          mediaRecorder.stop();
+        }
+      });
 
     //When user choose to record screen
     document.getElementById('record-screen').addEventListener('click', () => {
@@ -545,7 +568,7 @@ window.addEventListener('load', async () => {
           .then((screenStream) => {
             startRecording(screenStream);
           })
-          .catch(() => { });
+          .catch(() => {});
       }
     });
 
@@ -558,15 +581,44 @@ window.addEventListener('load', async () => {
           .then((videoStream) => {
             startRecording(videoStream);
           })
-          .catch(() => { });
+          .catch(() => {});
       }
     });
 
     document.querySelector('#renameBtn').onclick = () => {
       const newName = document.querySelector('#renameInput').value;
-      if(!newName) return;
+      if (!newName) return;
       socket.emit('rename', { room, username: newName });
       document.querySelector('#renameCancelBtn').click();
-    }
+    };
+
+    document.querySelector('#create-poll-btn').onclick = () => {
+      const inputValue = $('#create-poll-form').serializeArray();
+      if (!inputValue[0]?.value || !inputValue[1]?.value) return;
+      const newPoll = {
+        id: uuidv4(),
+        title: '',
+        poll: {},
+      };
+      inputValue.forEach((input) => {
+        if (input.name === 'title') newPoll.title = input.value;
+        else {
+          newPoll.poll[uuidv4()] = { value: input.value, vote: 0 };
+        }
+      });
+      $('#create-poll-form').trigger('reset');
+      $('.poll-input-block').not(':eq(0)').remove();
+      $('.remove-poll-btn').first().css({ display: 'none' });
+      $('.custom-success-toast').show();
+      setTimeout(() => {
+        $('.custom-success-toast').hide();
+      }, 2500);
+      socket.emit('newVote', {
+        room: room,
+        poll: newPoll,
+        sender: `${username}`,
+      });
+      h.addVote({ poll: newPoll }, 'local', room, socket);
+    };
   }
 });

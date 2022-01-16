@@ -3,7 +3,9 @@ function checkImageFile(url) {
 }
 
 function getExtOfFile(url) {
-  return filename.substring(filename.lastIndexOf('.')+1, filename.length) || "";
+  return (
+    filename.substring(filename.lastIndexOf('.') + 1, filename.length) || ''
+  );
 }
 
 export default {
@@ -158,7 +160,6 @@ export default {
 			`;
     } else if (data.type === 'file') {
       const file = data.msg;
-      console.log(file);
       if (checkImageFile(file.path)) {
         html = `
 					<li class="interaction-chatting-message-item">
@@ -193,11 +194,97 @@ export default {
     chatMsgDiv.scrollTo(0, chatMsgDiv.scrollHeight);
   },
 
+  addVote(data, senderType, room, socket) {
+    let chatMsgDiv = document.querySelector('#message-list-id');
+    let senderName = 'You';
+    const poll = data.poll || {};
+    if (!poll.title || !poll.poll || poll.poll.length === 0) return;
+
+    if (senderType === 'remote') {
+      senderName = data.sender;
+    }
+    const liElement = document.createElement('li');
+    liElement.className = 'interaction-chatting-message-item';
+
+    const divInfo = document.createElement('div');
+    divInfo.className = 'chatting-message-info';
+    const divUserName = document.createElement('div');
+    divUserName.className = 'chatting-message-username';
+    divUserName.innerHTML = senderName;
+    const divTime = document.createElement('div');
+    divTime.className = 'chatting-message-time';
+    divTime.innerHTML = moment().format('h:mm A');
+    divInfo.appendChild(divUserName);
+    divInfo.appendChild(divTime);
+    liElement.appendChild(divInfo);
+
+    const divMessage = document.createElement('div');
+    divMessage.innerHTML = 'Đã tạo một cuộc bình chọn:';
+    divMessage.className = 'chatting-message-content';
+    liElement.appendChild(divMessage);
+
+    const formPoll = document.createElement('form');
+    formPoll.className = 'chatting-message-poll';
+
+    const divPollTitle = document.createElement('div');
+    divPollTitle.className = 'chatting-poll-title';
+    divPollTitle.innerHTML = poll?.title;
+    formPoll.appendChild(divPollTitle);
+
+    Object.keys(poll.poll).forEach((item) => {
+      const divPollAnwser = document.createElement('div');
+      divPollAnwser.className = 'chatting-poll-answer';
+
+      const labelPollAnwser = document.createElement('label');
+      divPollAnwser.appendChild(labelPollAnwser);
+
+      const inputAnwser = document.createElement('input');
+      inputAnwser.type = 'radio';
+      inputAnwser.value = item;
+      inputAnwser.name = poll.id;
+      labelPollAnwser.appendChild(inputAnwser);
+
+      const spanLabel = document.createElement('span');
+      spanLabel.innerHTML = poll.poll[item]?.value || '';
+      spanLabel.style.marginLeft = '4px';
+      labelPollAnwser.appendChild(spanLabel);
+
+      const spanLabelVote = document.createElement('span');
+      spanLabelVote.innerHTML = '(0 vote)';
+      spanLabelVote.id = item;
+      spanLabelVote.style.marginLeft = '2px';
+      labelPollAnwser.appendChild(spanLabelVote);
+
+      formPoll.appendChild(divPollAnwser);
+    });
+
+    const buttonSubmit = document.createElement('button');
+    buttonSubmit.innerHTML = 'Bình chọn';
+    buttonSubmit.type = 'submit';
+    buttonSubmit.className = 'float-right chatting-poll-submit-btn';
+    formPoll.appendChild(buttonSubmit);
+
+    formPoll.onsubmit = (e) => {
+      e.preventDefault();
+      socket.emit('submitVote', { room, vote: e.target[poll.id].value });
+      formPoll
+        .querySelectorAll('input')
+        .forEach((item) => (item.disabled = true));
+      buttonSubmit.innerHTML = 'Đã bình chọn';
+      buttonSubmit.disabled = true;
+    };
+
+    liElement.appendChild(formPoll);
+
+    chatMsgDiv.appendChild(liElement);
+    chatMsgDiv.scrollTo(0, chatMsgDiv.scrollHeight);
+  },
+
   replaceTrack(stream, recipientPeer) {
     let sender = recipientPeer.getSenders
       ? recipientPeer
-        .getSenders()
-        .find((s) => s.track && s.track.kind === stream.kind)
+          .getSenders()
+          .find((s) => s.track && s.track.kind === stream.kind)
       : false;
 
     sender ? sender.replaceTrack(stream) : '';
@@ -269,7 +356,7 @@ export default {
     if (roomId && creator) {
       const { data } = await axios.post('/meet/check-owner', {
         roomId,
-        creator
+        creator,
       });
       return data;
     }
@@ -277,9 +364,11 @@ export default {
   },
 
   renderUserInRoom(users, socketId, isHost, socket) {
-    const ulListUserElement = document.querySelector('.interaction-people-list');
+    const ulListUserElement = document.querySelector(
+      '.interaction-people-list'
+    );
     ulListUserElement.innerHTML = '';
-    users.forEach(user => {
+    users.forEach((user) => {
       const liElement = document.createElement('li');
       liElement.className = 'interaction-people-item';
       const userInfoDiv = document.createElement('div');
@@ -288,7 +377,8 @@ export default {
       imgUser.className = 'interaction-people-avatar';
       const spanName = document.createElement('span');
       spanName.className = 'interaction-people-name';
-      spanName.innerHTML = (user.socketId === socketId) ? `${user.username} (You)` : user.username;
+      spanName.innerHTML =
+        user.socketId === socketId ? `${user.username} (You)` : user.username;
       userInfoDiv.appendChild(imgUser);
       userInfoDiv.appendChild(spanName);
       liElement.appendChild(userInfoDiv);
@@ -296,7 +386,7 @@ export default {
       if (user.socketId === socketId) {
         const controlDiv = document.createElement('div');
         controlDiv.className = 'control-icon-wrap rename';
-        controlDiv.addEventListener('click', function() {
+        controlDiv.addEventListener('click', function () {
           document.querySelector('#rename-modal').click();
         });
 
@@ -312,12 +402,12 @@ export default {
         controlDiv.appendChild(controlChildDiv);
 
         liElement.appendChild(controlDiv);
-      } else if(isHost) {
+      } else if (isHost) {
         const controlDiv = document.createElement('div');
         controlDiv.className = 'control-icon-wrap mute';
-        controlDiv.setAttribute("data-id", user.socketId);
+        controlDiv.setAttribute('data-id', user.socketId);
 
-        controlDiv.addEventListener('click', function() {
+        controlDiv.addEventListener('click', function () {
           socket.emit('mute', { to: user.socketId });
         });
 
@@ -355,18 +445,18 @@ export default {
       totalRemoteVideosDesktop <= 2
         ? '50%'
         : totalRemoteVideosDesktop == 3
-          ? '33.33%'
-          : totalRemoteVideosDesktop <= 8
-            ? '25%'
-            : totalRemoteVideosDesktop <= 15
-              ? '20%'
-              : totalRemoteVideosDesktop <= 18
-                ? '16%'
-                : totalRemoteVideosDesktop <= 23
-                  ? '15%'
-                  : totalRemoteVideosDesktop <= 32
-                    ? '12%'
-                    : '10%';
+        ? '33.33%'
+        : totalRemoteVideosDesktop <= 8
+        ? '25%'
+        : totalRemoteVideosDesktop <= 15
+        ? '20%'
+        : totalRemoteVideosDesktop <= 18
+        ? '16%'
+        : totalRemoteVideosDesktop <= 23
+        ? '15%'
+        : totalRemoteVideosDesktop <= 32
+        ? '12%'
+        : '10%';
 
     for (let i = 0; i < totalRemoteVideosDesktop; i++) {
       elem[i].style.width = newWidth;

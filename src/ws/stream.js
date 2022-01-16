@@ -1,15 +1,19 @@
-const rooms = {
+const rooms = {};
 
-}
+const users = {};
 
-const users = {
-
-}
+let poll = {};
 
 const stream = (socket) => {
   socket.on('ready', ({ room, socketId }) => {
-    if (socket.adapter.rooms[room] && socket.adapter.rooms[room].length === 20) {
-      socket.emit('roomStatus', { isFull: true, length: socket.adapter.rooms[room].length });
+    if (
+      socket.adapter.rooms[room] &&
+      socket.adapter.rooms[room].length === 20
+    ) {
+      socket.emit('roomStatus', {
+        isFull: true,
+        length: socket.adapter.rooms[room].length,
+      });
     } else {
       socket.emit('roomStatus', { isFull: false, length: 0 });
     }
@@ -29,12 +33,17 @@ const stream = (socket) => {
 
     //Inform other members in the room of new user's arrival
     if (socket.adapter.rooms[data.room].length > 1) {
-      socket.to(data.room).emit('new user', { socketId: data.socketId, username: data?.info?.username || "" });
+      socket.to(data.room).emit('new user', {
+        socketId: data.socketId,
+        username: data?.info?.username || '',
+      });
     }
   });
 
   socket.on('newUserStart', (data) => {
-    socket.to(data.to).emit('newUserStart', { sender: data.sender, username: data.username });
+    socket
+      .to(data.to)
+      .emit('newUserStart', { sender: data.sender, username: data.username });
   });
 
   socket.on('sdp', (data) => {
@@ -70,7 +79,7 @@ const stream = (socket) => {
     }
   });
 
-  socket.on('rename', data => {
+  socket.on('rename', (data) => {
     const socketId = socket.id.substring(8);
     const roomId = users[socketId];
     if (roomId) {
@@ -86,38 +95,48 @@ const stream = (socket) => {
     socket.to(to).emit('mute', to);
   });
 
-  // socket.on('drawing', ({ room, ...data }) => {
-  //   socket.to(room).emit('drawing', data);
-  // });
-  socket.on('drawing', function ({room,...data}) {
+  socket.on('newVote', ({ room, ...data }) => {
+    socket.to(room).emit('newVote', data);
+    poll = { ...poll, ...data.poll.poll };
+    console.log(poll);
+  });
+
+  socket.on('submitVote', ({ room, vote }) => {
+    poll[vote].vote = Number(poll[vote].vote) + 1;
+    socket.emit('submitVote', { key: vote, vote: poll[vote].vote });
+    socket.to(room).emit('submitVote', { key: vote, vote: poll[vote].vote });
+  });
+
+  // whiteboard
+  socket.on('drawing', function ({ room, ...data }) {
     socket.to(room).emit('drawing', { ...data });
   });
 
-  socket.on('rectangle', function ({room,...data}) {
+  socket.on('rectangle', function ({ room, ...data }) {
     socket.to(room).emit('rectangle', { ...data });
   });
 
-  socket.on('linedraw', function ({room,...data}) {
+  socket.on('linedraw', function ({ room, ...data }) {
     socket.to(room).emit('linedraw', { ...data });
   });
 
-  socket.on('circledraw', function ({room,...data}) {
+  socket.on('circledraw', function ({ room, ...data }) {
     socket.to(room).emit('circledraw', { ...data });
   });
 
-  socket.on('ellipsedraw', function ({room,...data}) {
+  socket.on('ellipsedraw', function ({ room, ...data }) {
     socket.to(room).emit('ellipsedraw', { ...data });
   });
 
-  socket.on('textdraw', function ({room,...data}) {
+  socket.on('textdraw', function ({ room, ...data }) {
     socket.to(room).emit('textdraw', { ...data });
   });
 
-  socket.on('copyCanvas', function ({room,...data}) {
+  socket.on('copyCanvas', function ({ room, ...data }) {
     socket.to(room).emit('copyCanvas', { ...data });
   });
 
-  socket.on('Clearboard', function ({room,...data}) {
+  socket.on('Clearboard', function ({ room, ...data }) {
     socket.to(room).emit('Clearboard', { ...data });
   });
 };

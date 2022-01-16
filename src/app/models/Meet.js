@@ -6,7 +6,7 @@ const MeetSchema = new Schema(
     roomId: { type: String, required: true },
     roomName: { type: String, required: true, default: 'Online meeting' },
     password: { type: String },
-    creator: { type: String, required: true }
+    creator: { type: String, required: true },
   },
   {
     timestamps: true,

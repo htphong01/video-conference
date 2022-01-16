@@ -2,10 +2,12 @@ const CLOUDINARY_API = 'https://api.cloudinary.com/v1_1/htphong02/upload';
 const CLOUDINARY_UPLOAD_PRESET = 'q64yqoyh';
 const CLOUDINARY_FOLDER = 'Video Conference';
 const roomName = document.querySelectorAll('.room-name');
-const inputChangeRoomName = document.querySelectorAll('.input-change-name-room');
+const inputChangeRoomName = document.querySelectorAll(
+  '.input-change-name-room'
+);
 const inputChangeAvatar = document.querySelector('#user-avatar-input');
 
-roomName.forEach(room => {
+roomName.forEach((room) => {
   const roomId = room.getAttribute('data-id');
   room.onclick = () => {
     const selector = `#inputRoomName-${roomId}`;
@@ -15,10 +17,10 @@ roomName.forEach(room => {
       room.style.display = 'none';
       input.focus();
     }
-  }
+  };
 });
 
-inputChangeRoomName.forEach(input => {
+inputChangeRoomName.forEach((input) => {
   const roomId = input.getAttribute('data-id');
   const selector = `#roomName-${roomId}`;
   const span = document.querySelector(selector);
@@ -27,7 +29,7 @@ inputChangeRoomName.forEach(input => {
       input.style.display = 'none';
       span.style.display = 'block';
     }
-  }
+  };
 
   input.onkeyup = async function (e) {
     if (e.key === 'Enter' || e.keyCode === 13) {
@@ -39,11 +41,11 @@ inputChangeRoomName.forEach(input => {
         input.value = roomName;
         axios.put('/meet', {
           roomId,
-          roomName
+          roomName,
         });
       }
     }
-  }
+  };
 });
 
 inputChangeAvatar.onchange = async function (e) {
@@ -54,13 +56,15 @@ inputChangeAvatar.onchange = async function (e) {
     formData.append('file', file);
     formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
     formData.append('folder', CLOUDINARY_FOLDER);
-    const { data } = await axios.post(CLOUDINARY_API, formData, { headers: { 'Content-type': 'multipart/form-data' }});
-    if(data?.url) {
+    const { data } = await axios.post(CLOUDINARY_API, formData, {
+      headers: { 'Content-type': 'multipart/form-data' },
+    });
+    if (data?.url) {
       document.querySelector('.img-avatar').src = data.url;
-      const { data: result } = await axios.put('/profile', { avatar: data.url });
+      const { data: result } = await axios.put('/profile', {
+        avatar: data.url,
+      });
       console.log(result);
     }
-  } catch (error) {
-    
-  }
-}
+  } catch (error) {}
+};

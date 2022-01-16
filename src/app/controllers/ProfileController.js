@@ -2,7 +2,6 @@ const profileService = require('../services/ProfileService');
 const meetService = require('../services/MeetService');
 
 class ProfileController {
-
   // [GET] /profile
   async index(req, res, next) {
     const user = req.session?.passport?.user || req.session?.user;
@@ -25,7 +24,6 @@ class ProfileController {
       res.json({ success: false, message: 'Invalid user' });
     }
   }
-
 }
 
 module.exports = new ProfileController();

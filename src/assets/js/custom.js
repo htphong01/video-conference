@@ -163,16 +163,65 @@ document.querySelector('#addUserBtn').onclick = async () => {
   if (email) {
     const { data } = await axios.post('/meet/invite', {
       email,
-      url: window.location.href
-    })
+      url: window.location.href,
+    });
 
     if (data.success) {
       document.querySelector('.addUserInput').value = '';
       document.querySelector('#invited-label').style.display = 'block';
     }
   }
+};
+
+document.querySelector('.more-option-btn').onclick = () => {
+  document.querySelector('.sub-menu').classList.toggle('active');
+};
+
+/* View in fullscreen */
+function openFullscreen() {
+  const elem = document.documentElement;
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) {
+    /* Safari */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) {
+    /* IE11 */
+    elem.msRequestFullscreen();
+  }
 }
 
-document.querySelector('#exampleModal').addEventListener('shown.bs.modal', function () {
-  document.querySelector('#invited-label').style.display = 'none';
-})
+document.querySelector('.sub-menu-full-screen').onclick = () => {
+  openFullscreen();
+};
+
+/* Close fullscreen */
+function closeFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) {
+    /* Safari */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) {
+    /* IE11 */
+    document.msExitFullscreen();
+  }
+}
+
+const addNewPollAnswer = document.querySelector('.add-poll-answer-block');
+addNewPollAnswer.onclick = function () {
+  if ($('.poll-input-block').length === 1) {
+    $('.remove-poll-btn').first().css({ display: 'block' });
+  }
+  const newInput = $('.poll-input-block').first().clone(true);
+  newInput.children().first().val('');
+  newInput.insertAfter($('.poll-input-block').last());
+  return false;
+};
+
+$('.remove-poll-btn').click(function () {
+  $(this).parent().remove();
+  if ($('.poll-input-block').length === 1) {
+    $('.remove-poll-btn').first().css({ display: 'none' });
+  }
+});

@@ -18,6 +18,15 @@
 </head>
 
 <body>
+	<div class="custom-success-toast">
+    <div class="custom-toast-header">
+      <strong class="mr-auto">Notification</strong>
+      <small></small>
+    </div>
+    <div class="custom-toast-body">
+      Create new poll successful
+    </div>
+  </div>
 	<div class="custom-modal" id='recording-options-modal'>
 		<div class="custom-modal-content">
 			<div class="row text-center">
@@ -79,7 +88,7 @@
 								</div>
 							</div>
 							<div class="col-md-2 d-flex align-items-center justify-content-center">
-								<a href="/profile"  >
+								<a href="/profile">
 									<img src="<%= user.avatar %>" alt="" class="img-avatar-mail">
 								</a>
 							</div>
@@ -199,16 +208,7 @@
 					<div class="interaction-people-block">
 						<h2>In call</h2>
 						<ul class="interaction-people-list">
-							<li class="interaction-people-item">
-								<div>
-									<img src="https://lh3.googleusercontent.com/a/AATXAJxKI9kG7COmDjvrHmOfM9CR3q-51QsnalnPdpBF=s192-c-mo"
-										alt="" class="interaction-people-avatar">
-									<span class="interaction-people-name">
-										Huyền Nguyễn Thị Cẩm (You)
-									</span>
-								</div>
-							</li>
-							<li class="interaction-people-item">
+							<!-- <li class="interaction-people-item">
 								<div>
 									<img src="https://lh3.googleusercontent.com/a/AATXAJxKI9kG7COmDjvrHmOfM9CR3q-51QsnalnPdpBF=s192-c-mo"
 										alt="" class="interaction-people-avatar">
@@ -222,7 +222,7 @@
 										<i class="fas fa-chevron-right"></i>
 									</div>
 								</div>
-							</li>
+							</li> -->
 
 						</ul>
 					</div>
@@ -233,7 +233,48 @@
 						Messages can only be seen by people in the call and are deleted when the call ends.
 					</div>
 					<ul class="interaction-chatting-list-messages" id="message-list-id">
-
+						<!-- <li class="interaction-chatting-message-item">
+							<div class="chatting-message-info">
+								<div class="chatting-message-username">You</div>
+								<div class="chatting-message-time">8:27 PM</div>
+							</div>
+							<div class="chatting-message-content">
+								Đã tạo 1 cuộc bình chọn:
+							</div>
+							<form class="chatting-message-poll">
+								<div class="chatting-poll-title">
+									Bài hát nào dưới đây của Sơn Tùng - MTP:
+								</div>
+								<div class="chatting-poll-answer">
+									<label>
+										<input type="radio" value="1" name="abc" />
+										<span>Từ chối anh nhẹ nhàng thôi Từ chối anh nhẹ nhàng thôi Từ chối anh nhẹ nhàng thôi</span>
+										<span>(0 votes)</span>
+									</label>
+								</div>
+								<div class="chatting-poll-answer">
+									<label>
+										<input type="radio" value="2" name="abc" />
+										<span>2PM</span>
+									</label>
+								</div>
+								<div class="chatting-poll-answer">
+									<label>
+										<input type="radio" value="3" name="abc" />
+										<span>Chúng ta không thuộc về nhau</span>
+									</label>
+								</div>
+								<div class="chatting-poll-answer">
+									<label>
+										<input type="radio" value="4" name="abc" />
+										<span>Crying over you</span>
+									</label>
+								</div>
+								<button type="submit" class="float-right chatting-poll-submit-btn">
+									Bình chọn
+								</button>
+							</form>
+						</li> -->
 					</ul>
 					<div class="interaction-chatting-input">
 						<form id="message-form-id">
@@ -305,13 +346,81 @@
 			<button class="btn btn-sm rounded-0 btn-no-effect room-control-btn " id='record' title="Record">
 				<i class="fa fa-dot-circle text-white"></i>
 			</button>
-
+			<button class="btn btn-sm rounded-0 btn-no-effect room-control-btn " id='qa-btn' title="Q&A">
+				<i class="far fa-question-circle text-white"></i>
+			</button>
+			<div class="room-control-item room-control-btn more-option-btn" title="More option">
+				<i class="fas fa-ellipsis-v"></i>
+				<div class="sub-menu">
+					<ul class="sub-menu-list">
+						<li class="sub-menu-item sub-menu-white-board">
+							<i class="fas fa-pen"></i>
+							<div class="sub-menu-item-text ">
+								<div>Whiteboard</div>
+								<div>Open a Jam</div>
+							</div>
+						</li>
+						<li class="sub-menu-item sub-menu-full-screen">
+							<i class="fas fa-expand"></i>
+							<div class="sub-menu-item-text ">
+								Full screen
+							</div>
+						</li>
+						<li class="sub-menu-item sub-menu-new-poll" type="button" data-toggle="modal"
+							data-target=".create-new-poll-modal">
+							<i class="fas fa-poll-h"></i>
+							<div class="sub-menu-item-text ">
+								Create new poll
+							</div>
+						</li>
+						<!-- <li class="sub-menu-item">
+							<img src="./assets/images/background-black.svg" alt="present">
+							<div class="sub-menu-item-text">
+								Change background
+							</div>
+						</li>
+						<li class="sub-menu-item">
+							<i class="far fa-closed-captioning"></i>
+							<div class="sub-menu-item-text">
+								<div>Captions</div>
+								<div>Off</div>
+							</div>
+						</li> -->
+						<!-- <li class="divider"></li>
+						<li class="sub-menu-item">
+							<img src="./assets/images/report-problem.svg" alt="present">
+							<div class="sub-menu-item-text">
+								Report a problem
+							</div>
+						</li>
+						<li class="sub-menu-item">
+							<img src="./assets/images/report-abuse.svg" alt="present">
+							<div class="sub-menu-item-text">
+								Report abuse
+							</div>
+						</li>
+						<li class="sub-menu-item">
+							<img src="./assets/images/troubleshooting.svg" alt="present">
+							<div class="sub-menu-item-text">
+								Troubleshooting & help
+							</div>
+						</li>
+						<li class="sub-menu-item">
+							<i class="fas fa-cog"></i>
+							<div class="sub-menu-item-text">
+								Settings
+							</div>
+						</li> -->
+					</ul>
+				</div>
+			</div>
 			<button class="btn btn-sm rounded-0 btn-no-effect room-control-btn text-white active room-control-btn-end-call">
 				<a href="/meet" class="text-white text-decoration-none" title="Leave">
 					<img src="./assets/images/end-call.svg">
 					<!-- <i class="fa fa-sign-out-alt text-white" ></i> -->
 				</a>
 			</button>
+
 		</div>
 		<div class="room-interact-control">
 			<div class="room-interact-control-item">
@@ -403,6 +512,43 @@
 		</div>
 	</div>
 
+	<!-- Modal create new poll -->
+	<div class="modal fade create-new-poll-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Create new poll</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="create-poll-form" action="#" method="">
+						<div class="form-group">
+							<label for="recipient-name" class="col-form-label"><b>Title:</b></label>
+							<input type="text" class="form-control" id="poll-content" name="title">
+						</div>
+						<div>
+							<label for="message-text" class="col-form-label"><b>Poll:</b></label>
+						</div>
+						<div class="form-group poll-input-block">
+							<input type="text" class="form-control" name="poll[]" placeholder="Enter poll content">
+							<i class="fas fa-times remove-poll-btn"></i>
+						</div>
+						<div class="form-group add-poll-answer-block">
+							<i class="fas fa-plus add-new-poll-btn"></i>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" id="create-poll-btn">Create</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
 		crossorigin="anonymous"></script>
@@ -422,8 +568,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js'></script>
 	<script src='https://cdn.rawgit.com/yahoo/xss-filters/master/dist/xss-filters.js'></script>
-	<script src='assets/js/autolink.js'></script>
-	<script type="module" src='assets/js/custom.js'></script>
+	<script src='/assets/js/autolink.js'></script>
+	<script type="module" src='/assets/js/custom.js'></script>
 </body>
 
 </html>

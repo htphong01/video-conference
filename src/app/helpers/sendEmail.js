@@ -1,4 +1,4 @@
-const nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer');
 
 const renderEmailContent = (url) => {
   const content = `
@@ -55,27 +55,27 @@ const renderEmailContent = (url) => {
         </tr>
       </table>
     </body>
-  `
+  `;
 
   return content;
-}
+};
 
 const sendInviteEmail = async (email, url) => {
-  const emailContent = renderEmailContent(url)
+  const emailContent = renderEmailContent(url);
   let transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
       user: 'cty.hotjob2020@gmail.com',
-      pass: 'Qw01635953170'
+      pass: 'Qw01635953170',
     },
   });
 
   let info = await transporter.sendMail({
     from: `"Video conference" <videoconference@gmail.com>`,
     to: `${email}`,
-    subject: "[VideoConference] Inviting to join an online meeting",
+    subject: '[VideoConference] Inviting to join an online meeting',
     html: emailContent,
   });
-}
+};
 
-module.exports = { sendInviteEmail }
+module.exports = { sendInviteEmail };

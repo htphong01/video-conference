@@ -62,8 +62,6 @@ class MeetController {
       res.json({ success: false, message: 'Invalid user' });
     }
   }
-
-
 }
 
 module.exports = new MeetController();
