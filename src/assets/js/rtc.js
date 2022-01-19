@@ -105,8 +105,8 @@ window.addEventListener('load', async () => {
       socket.on('ice candidates', async (data) => {
         data.candidate
           ? await pc[data.sender].addIceCandidate(
-              new RTCIceCandidate(data.candidate)
-            )
+            new RTCIceCandidate(data.candidate)
+          )
           : '';
       });
 
@@ -114,8 +114,8 @@ window.addEventListener('load', async () => {
         if (data.description.type === 'offer') {
           data.description
             ? await pc[data.sender].setRemoteDescription(
-                new RTCSessionDescription(data.description)
-              )
+              new RTCSessionDescription(data.description)
+            )
             : '';
 
           h.getUserFullMedia()
@@ -474,7 +474,7 @@ window.addEventListener('load', async () => {
     };
 
     // create new poll
-    document.querySelector('.sub-menu-new-poll').onclick = () => {};
+    document.querySelector('.sub-menu-new-poll').onclick = () => { };
 
     //When the video icon is clicked
     document.getElementById('toggle-video').addEventListener('click', (e) => {
@@ -568,7 +568,7 @@ window.addEventListener('load', async () => {
           .then((screenStream) => {
             startRecording(screenStream);
           })
-          .catch(() => {});
+          .catch(() => { });
       }
     });
 
@@ -581,7 +581,7 @@ window.addEventListener('load', async () => {
           .then((videoStream) => {
             startRecording(videoStream);
           })
-          .catch(() => {});
+          .catch(() => { });
       }
     });
 
@@ -620,5 +620,21 @@ window.addEventListener('load', async () => {
       });
       h.addVote({ poll: newPoll }, 'local', room, socket);
     };
+
+    document.querySelector('#search-user-input').oninput = async (e) => {
+      e.preventDefault();
+      const keyword = e.target.value?.toLowerCase();
+      const users = JSON.parse(sessionStorage.getItem('users'));
+      const isHost = await h.checkIsHost();
+
+      if(!keyword) {
+        h.renderUserInRoom(users, socketId, isHost.success, socket);
+        return;
+      }
+
+      const filterUser = users.filter(user => user.username?.toLowerCase()?.includes(keyword));
+
+      h.renderUserInRoom(filterUser, socketId, isHost.success, socket);
+    }
   }
 });
