@@ -64,6 +64,14 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <% if(meets.length === 0) {%>
+                      <tr>
+                        <td colspan="3" class="text-center">
+                          You haven't hosted any online meeting!
+                          <a href="/meet"><b>Create now</b></a>
+                        </td>
+                      </tr>
+                    <% } %>
                     <% meets.forEach((room, index)=> {%>
                       <tr>
                         <th scope="row" class="text-center" style="width: 10%">
