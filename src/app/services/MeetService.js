@@ -78,6 +78,18 @@ class MeetService {
       };
     }
   }
+
+  async deleteMeet(id) {
+    try {
+      await Meet.deleteOne({ _id: id });
+      return { success: true };
+    } catch (error) {
+      return {
+        success: false,
+        error,
+      };
+    }
+  }
 }
 
 module.exports = new MeetService();

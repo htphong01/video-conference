@@ -8,6 +8,8 @@ router.get('/whiteboard', meetController.whiteboard);
 router.get('/:id', meetController.show);
 router.post('/invite', meetController.invite);
 router.post('/check-owner', meetController.checkOwner);
+router.delete('/:id', meetController.delete);
 router.put('/', meetController.update);
+
 
 module.exports = router;

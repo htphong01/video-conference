@@ -62,6 +62,11 @@ class MeetController {
       res.json({ success: false, message: 'Invalid user' });
     }
   }
+
+  async delete(req, res, next) {
+    const result = await meetService.deleteMeet(req.params.id);
+    res.json(result);
+  }
 }
 
 module.exports = new MeetController();
