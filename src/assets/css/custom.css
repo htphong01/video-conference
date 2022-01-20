@@ -438,7 +438,7 @@
   padding: 8px 12px;
 }
 
-.room-control-btn.record-active > i {
+.record-active > i {
   color: red !important;
 }
 
@@ -631,6 +631,44 @@
 }
 
 .chatting-poll-submit-btn:focus {
+  outline: none;
+  border: none;
+}
+
+.question-tab-content {
+  height: 300px; 
+  overflow-y: scroll;
+  scrollbar-width: thin;
+}
+
+.question-tab-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.question-tab-content::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 1px rgba(0,0,0,0.3);
+}
+
+.question-tab-content::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+.question-info-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.close-question-btn {
+  font-size: 12px;
+  outline: none;
+  border: none;
+  background-color: #007bff;
+  color: #FFF;
+}
+
+.close-question-btn:focus {
   outline: none;
   border: none;
 }

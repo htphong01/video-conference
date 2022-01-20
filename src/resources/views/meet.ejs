@@ -19,14 +19,14 @@
 
 <body>
 	<div class="custom-success-toast">
-    <div class="custom-toast-header">
-      <strong class="mr-auto">Notification</strong>
-      <small></small>
-    </div>
-    <div class="custom-toast-body">
-      Create new poll successful
-    </div>
-  </div>
+		<div class="custom-toast-header">
+			<strong class="mr-auto">Notification</strong>
+			<small></small>
+		</div>
+		<div class="custom-toast-body">
+			Create new poll successful
+		</div>
+	</div>
 	<div class="custom-modal" id='recording-options-modal'>
 		<div class="custom-modal-content">
 			<div class="row text-center">
@@ -343,10 +343,11 @@
 
 			</button>
 
-			<button class="btn btn-sm rounded-0 btn-no-effect room-control-btn " id='record' title="Record">
+			<!-- <button class="btn btn-sm rounded-0 btn-no-effect room-control-btn " id='record' title="Record">
 				<i class="fa fa-dot-circle text-white"></i>
-			</button>
-			<button class="btn btn-sm rounded-0 btn-no-effect room-control-btn " id='qa-btn' title="Q&A">
+			</button> -->
+			<button class="btn btn-sm rounded-0 btn-no-effect room-control-btn " id="qa-btn" data-toggle="modal"
+				data-target="#qaModal" title="Q&A">
 				<i class="far fa-question-circle text-white"></i>
 			</button>
 			<div class="room-control-item room-control-btn more-option-btn" title="More option">
@@ -358,6 +359,12 @@
 							<div class="sub-menu-item-text ">
 								<div>Whiteboard</div>
 								<div>Open a Jam</div>
+							</div>
+						</li>
+						<li class="sub-menu-item sub-menu-white-board" id="record">
+							<i class="fa fa-dot-circle"></i>
+							<div class="sub-menu-item-text record-text">
+								Record
 							</div>
 						</li>
 						<li class="sub-menu-item sub-menu-full-screen">
@@ -544,6 +551,57 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 					<button type="button" class="btn btn-primary" id="create-poll-btn">Create</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Q&A Modal -->
+	<div class="modal fade" id="qaModal" tabindex="-1" role="dialog" aria-labelledby="qaModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="qaModalLabel">Q&A</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+						<li class="nav-item" style="flex: 1; text-align: center;">
+							<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#open-tab" role="tab"
+								aria-controls="open-tab" aria-selected="true">Open</a>
+						</li>
+						<li class="nav-item" style="flex: 1; text-align: center;">
+							<a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#close-tab" role="tab"
+								aria-controls="close-tab" aria-selected="false">Close</a>
+						</li>
+					</ul>
+					<div class="tab-content question-tab-content" id="pills-tabContent">
+						<div class="tab-pane fade show active" id="open-tab" role="tabpanel" aria-labelledby="pills-home-tab">
+							<ul style="padding-left: 0; list-style: none;" id="open-tab-list">
+								
+							</ul>
+						</div>
+						<div class="tab-pane fade" id="close-tab" role="tabpanel" aria-labelledby="pills-profile-tab">
+							<ul style="padding-left: 0; list-style: none;" id="close-tab-list">
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<form class="w-100 m-0" id="send-question-form">
+						<div class="form-group">
+							<input name="question" id="send-question-input" class="form-control" placeholder="Enter your question" />
+						</div>
+						<div class="form-group d-flex justify-content-between align-items-baseline">
+							<label style="cursor: pointer;">
+								<input name="anonymous" type="checkbox" id="checkbox-anonymous">
+								Send anonymous
+							</label>
+							<button class="btn btn-primary" type="submit">Send</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>

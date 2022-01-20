@@ -280,11 +280,58 @@ export default {
     chatMsgDiv.scrollTo(0, chatMsgDiv.scrollHeight);
   },
 
+  renderQuestion(question, room, socket) {
+    let openTabList = document.querySelector('#open-tab-list');
+    let closeTabList = document.querySelector('#close-tab-list');
+    const liElement = document.createElement('li');
+    liElement.className = 'interaction-chatting-message-item';
+
+    const divInfo = document.createElement('div');
+    divInfo.className = 'chatting-message-info question-info-wrap';
+    const divWrap = document.createElement('div');
+
+    const divUserName = document.createElement('div');
+    divUserName.className = 'chatting-message-username';
+    divUserName.innerHTML = question.sender;
+    const divTime = document.createElement('div');
+    divTime.className = 'chatting-message-time';
+    divTime.innerHTML = question.time;
+    divWrap.appendChild(divUserName);
+    divWrap.appendChild(divTime);
+
+    divInfo.appendChild(divWrap);
+
+    if (question.status === 'open') {
+      const buttonClose = document.createElement('button');
+      buttonClose.innerHTML = 'Close';
+      buttonClose.className = 'close-question-btn';
+      buttonClose.onclick = () => {
+        socket.emit('close-question', { room, question });
+        liElement.remove();
+      }
+
+      divInfo.appendChild(buttonClose);
+    }
+    liElement.appendChild(divInfo);
+
+    const divMessage = document.createElement('div');
+    divMessage.innerHTML = question.question;
+    divMessage.className = 'chatting-message-content';
+    liElement.appendChild(divMessage);
+    if (question.status === 'open') {
+      openTabList.appendChild(liElement);
+      openTabList.scrollTo(0, openTabList.scrollHeight);
+    } else {
+      closeTabList.appendChild(liElement);
+      closeTabList.scrollTo(0, closeTabList.scrollHeight);
+    }
+  },
+
   replaceTrack(stream, recipientPeer) {
     let sender = recipientPeer.getSenders
       ? recipientPeer
-          .getSenders()
-          .find((s) => s.track && s.track.kind === stream.kind)
+        .getSenders()
+        .find((s) => s.track && s.track.kind === stream.kind)
       : false;
 
     sender ? sender.replaceTrack(stream) : '';
@@ -445,18 +492,18 @@ export default {
       totalRemoteVideosDesktop <= 2
         ? '50%'
         : totalRemoteVideosDesktop == 3
-        ? '33.33%'
-        : totalRemoteVideosDesktop <= 8
-        ? '25%'
-        : totalRemoteVideosDesktop <= 15
-        ? '20%'
-        : totalRemoteVideosDesktop <= 18
-        ? '16%'
-        : totalRemoteVideosDesktop <= 23
-        ? '15%'
-        : totalRemoteVideosDesktop <= 32
-        ? '12%'
-        : '10%';
+          ? '33.33%'
+          : totalRemoteVideosDesktop <= 8
+            ? '25%'
+            : totalRemoteVideosDesktop <= 15
+              ? '20%'
+              : totalRemoteVideosDesktop <= 18
+                ? '16%'
+                : totalRemoteVideosDesktop <= 23
+                  ? '15%'
+                  : totalRemoteVideosDesktop <= 32
+                    ? '12%'
+                    : '10%';
 
     for (let i = 0; i < totalRemoteVideosDesktop; i++) {
       elem[i].style.width = newWidth;

@@ -4,6 +4,8 @@ const users = {};
 
 let poll = {};
 
+const questions = {};
+
 const stream = (socket) => {
   socket.on('ready', ({ room, socketId }) => {
     if (
@@ -139,6 +141,17 @@ const stream = (socket) => {
   socket.on('Clearboard', function ({ room, ...data }) {
     socket.to(room).emit('Clearboard', { ...data });
   });
+
+  socket.on('question', ({ room, ...question }) => {
+    socket.emit('question', {...question});
+    socket.to(room).emit('question', {...question});
+  });
+
+  socket.on('close-question', ({ room, question }) => {
+    question.status = 'close';
+    socket.emit('question', {...question});
+    socket.to(room).emit('question', {...question});
+  })
 };
 
 module.exports = stream;

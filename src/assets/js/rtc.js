@@ -171,6 +171,10 @@ window.addEventListener('load', async () => {
         elem.click();
         document.querySelector('#notificationModalBtn').click();
       });
+
+      socket.on('question', data => {
+        h.renderQuestion(data, room, socket);
+      })
     });
 
     function getAndSetUserStream() {
@@ -406,20 +410,6 @@ window.addEventListener('load', async () => {
       }
     }
 
-    function toggleRecordingIcons(isRecording) {
-      let e = document.getElementById('record');
-
-      if (isRecording) {
-        e.setAttribute('title', 'Stop recording');
-        e.children[0].classList.add('text-danger');
-        e.children[0].classList.remove('text-white');
-      } else {
-        e.setAttribute('title', 'Record');
-        e.children[0].classList.add('text-white');
-        e.children[0].classList.remove('text-danger');
-      }
-    }
-
     function startRecording(stream) {
       mediaRecorder = new MediaRecorder(stream, {
         mimeType: 'video/webm;codecs=vp9',
@@ -432,8 +422,6 @@ window.addEventListener('load', async () => {
       };
 
       mediaRecorder.onstop = function () {
-        toggleRecordingIcons(false);
-
         h.saveRecordedStream(recordedStream, username);
 
         setTimeout(() => {
@@ -544,8 +532,10 @@ window.addEventListener('load', async () => {
         if (this.classList.contains('record-active')) {
           this.classList.remove('record-active');
           mediaRecorder.stop();
+          document.querySelector('.record-text').innerHTML = 'Record';
         } else {
           this.classList.add('record-active');
+          document.querySelector('.record-text').innerHTML = 'Stop recording';
         }
 
         if (!mediaRecorder || mediaRecorder.state == 'inactive') {
@@ -559,8 +549,6 @@ window.addEventListener('load', async () => {
 
     //When user choose to record screen
     document.getElementById('record-screen').addEventListener('click', () => {
-      h.toggleModal('recording-options-modal', false);
-
       if (screen && screen.getVideoTracks().length) {
         startRecording(screen);
       } else {
@@ -635,6 +623,17 @@ window.addEventListener('load', async () => {
       const filterUser = users.filter(user => user.username?.toLowerCase()?.includes(keyword));
 
       h.renderUserInRoom(filterUser, socketId, isHost.success, socket);
+    }
+
+    document.querySelector('#send-question-form').onsubmit = (e) => {
+      e.preventDefault();
+      const question = e.target.question.value;
+      const isAnonymous = document.querySelector('#checkbox-anonymous').checked;
+      const sender = isAnonymous ? 'Anonymous' : username;
+      const time = moment().format('h:mm A');
+      socket.emit('question', { room, id: uuidv4(), sender, question, time, status: 'open' });
+      document.querySelector('#send-question-input').value = '';
+      document.querySelector('#checkbox-anonymous').checked = false;
     }
   }
 });
