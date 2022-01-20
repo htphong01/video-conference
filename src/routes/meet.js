@@ -11,5 +11,4 @@ router.post('/check-owner', meetController.checkOwner);
 router.delete('/:id', meetController.delete);
 router.put('/', meetController.update);
 
-
 module.exports = router;

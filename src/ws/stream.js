@@ -143,15 +143,15 @@ const stream = (socket) => {
   });
 
   socket.on('question', ({ room, ...question }) => {
-    socket.emit('question', {...question});
-    socket.to(room).emit('question', {...question});
+    socket.emit('question', { ...question });
+    socket.to(room).emit('question', { ...question });
   });
 
   socket.on('close-question', ({ room, question }) => {
     question.status = 'close';
-    socket.emit('question', {...question});
-    socket.to(room).emit('question', {...question});
-  })
+    socket.emit('question', { ...question });
+    socket.to(room).emit('question', { ...question });
+  });
 };
 
 module.exports = stream;

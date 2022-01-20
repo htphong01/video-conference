@@ -105,8 +105,8 @@ window.addEventListener('load', async () => {
       socket.on('ice candidates', async (data) => {
         data.candidate
           ? await pc[data.sender].addIceCandidate(
-            new RTCIceCandidate(data.candidate)
-          )
+              new RTCIceCandidate(data.candidate)
+            )
           : '';
       });
 
@@ -114,8 +114,8 @@ window.addEventListener('load', async () => {
         if (data.description.type === 'offer') {
           data.description
             ? await pc[data.sender].setRemoteDescription(
-              new RTCSessionDescription(data.description)
-            )
+                new RTCSessionDescription(data.description)
+              )
             : '';
 
           h.getUserFullMedia()
@@ -172,9 +172,9 @@ window.addEventListener('load', async () => {
         document.querySelector('#notificationModalBtn').click();
       });
 
-      socket.on('question', data => {
+      socket.on('question', (data) => {
         h.renderQuestion(data, room, socket);
-      })
+      });
     });
 
     function getAndSetUserStream() {
@@ -462,7 +462,7 @@ window.addEventListener('load', async () => {
     };
 
     // create new poll
-    document.querySelector('.sub-menu-new-poll').onclick = () => { };
+    document.querySelector('.sub-menu-new-poll').onclick = () => {};
 
     //When the video icon is clicked
     document.getElementById('toggle-video').addEventListener('click', (e) => {
@@ -556,7 +556,7 @@ window.addEventListener('load', async () => {
           .then((screenStream) => {
             startRecording(screenStream);
           })
-          .catch(() => { });
+          .catch(() => {});
       }
     });
 
@@ -569,7 +569,7 @@ window.addEventListener('load', async () => {
           .then((videoStream) => {
             startRecording(videoStream);
           })
-          .catch(() => { });
+          .catch(() => {});
       }
     });
 
@@ -615,15 +615,17 @@ window.addEventListener('load', async () => {
       const users = JSON.parse(sessionStorage.getItem('users'));
       const isHost = await h.checkIsHost();
 
-      if(!keyword) {
+      if (!keyword) {
         h.renderUserInRoom(users, socketId, isHost.success, socket);
         return;
       }
 
-      const filterUser = users.filter(user => user.username?.toLowerCase()?.includes(keyword));
+      const filterUser = users.filter((user) =>
+        user.username?.toLowerCase()?.includes(keyword)
+      );
 
       h.renderUserInRoom(filterUser, socketId, isHost.success, socket);
-    }
+    };
 
     document.querySelector('#send-question-form').onsubmit = (e) => {
       e.preventDefault();
@@ -631,9 +633,16 @@ window.addEventListener('load', async () => {
       const isAnonymous = document.querySelector('#checkbox-anonymous').checked;
       const sender = isAnonymous ? 'Anonymous' : username;
       const time = moment().format('h:mm A');
-      socket.emit('question', { room, id: uuidv4(), sender, question, time, status: 'open' });
+      socket.emit('question', {
+        room,
+        id: uuidv4(),
+        sender,
+        question,
+        time,
+        status: 'open',
+      });
       document.querySelector('#send-question-input').value = '';
       document.querySelector('#checkbox-anonymous').checked = false;
-    }
+    };
   }
 });

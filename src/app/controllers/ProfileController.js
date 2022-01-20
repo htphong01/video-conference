@@ -19,8 +19,8 @@ class ProfileController {
     if (user) {
       const userId = user.id || user._id;
       const result = await profileService.update(userId, req.body);
-      if(result.success) {
-        req.session.user = {...user, ...req.body};
+      if (result.success) {
+        req.session.user = { ...user, ...req.body };
       }
       res.json(result);
     } else {

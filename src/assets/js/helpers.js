@@ -308,7 +308,7 @@ export default {
       buttonClose.onclick = () => {
         socket.emit('close-question', { room, question });
         liElement.remove();
-      }
+      };
 
       divInfo.appendChild(buttonClose);
     }
@@ -330,8 +330,8 @@ export default {
   replaceTrack(stream, recipientPeer) {
     let sender = recipientPeer.getSenders
       ? recipientPeer
-        .getSenders()
-        .find((s) => s.track && s.track.kind === stream.kind)
+          .getSenders()
+          .find((s) => s.track && s.track.kind === stream.kind)
       : false;
 
     sender ? sender.replaceTrack(stream) : '';
@@ -492,18 +492,18 @@ export default {
       totalRemoteVideosDesktop <= 2
         ? '50%'
         : totalRemoteVideosDesktop == 3
-          ? '33.33%'
-          : totalRemoteVideosDesktop <= 8
-            ? '25%'
-            : totalRemoteVideosDesktop <= 15
-              ? '20%'
-              : totalRemoteVideosDesktop <= 18
-                ? '16%'
-                : totalRemoteVideosDesktop <= 23
-                  ? '15%'
-                  : totalRemoteVideosDesktop <= 32
-                    ? '12%'
-                    : '10%';
+        ? '33.33%'
+        : totalRemoteVideosDesktop <= 8
+        ? '25%'
+        : totalRemoteVideosDesktop <= 15
+        ? '20%'
+        : totalRemoteVideosDesktop <= 18
+        ? '16%'
+        : totalRemoteVideosDesktop <= 23
+        ? '15%'
+        : totalRemoteVideosDesktop <= 32
+        ? '12%'
+        : '10%';
 
     for (let i = 0; i < totalRemoteVideosDesktop; i++) {
       elem[i].style.width = newWidth;

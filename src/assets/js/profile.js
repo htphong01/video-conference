@@ -6,7 +6,7 @@ const inputChangeRoomName = document.querySelectorAll(
   '.input-change-name-room'
 );
 const inputChangeAvatar = document.querySelector('#user-avatar-input');
-let meetId = "";
+let meetId = '';
 
 roomName.forEach((room) => {
   const roomId = room.getAttribute('data-id');
@@ -72,10 +72,10 @@ inputChangeAvatar.onchange = async function (e) {
 $('.delete-btn').on('click', function () {
   meetId = $(this).data('id');
   $('#modalBtn').click();
-})
+});
 
 document.querySelector('#deleteModalBtn').onclick = async () => {
   const url = `/meet/${meetId}`;
   axios.delete(url);
   window.location.reload();
-}
+};
