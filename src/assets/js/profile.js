@@ -76,6 +76,6 @@ $('.delete-btn').on('click', function () {
 
 document.querySelector('#deleteModalBtn').onclick = async () => {
   const url = `/meet/${meetId}`;
-  axios.delete(url);
+  await axios.delete(url);
   window.location.reload();
 };
