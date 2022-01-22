@@ -235,7 +235,7 @@ input.local-login-input:-webkit-autofill:active {
   transform: translateX(50%);
   background: var(--error-toast-background-color);
   padding: 8px 20px;
-  color: var(--primary-text-color);
+  color: #FFFFFF;
   transition: all 1s ease;
   border-radius: 4px;
   display: none;
