@@ -113,8 +113,8 @@ window.addEventListener('load', async () => {
       socket.on('ice candidates', async (data) => {
         data.candidate
           ? await pc[data.sender].addIceCandidate(
-              new RTCIceCandidate(data.candidate)
-            )
+            new RTCIceCandidate(data.candidate)
+          )
           : '';
       });
 
@@ -122,8 +122,8 @@ window.addEventListener('load', async () => {
         if (data.description.type === 'offer') {
           data.description
             ? await pc[data.sender].setRemoteDescription(
-                new RTCSessionDescription(data.description)
-              )
+              new RTCSessionDescription(data.description)
+            )
             : '';
 
           h.getUserFullMedia()
@@ -180,7 +180,7 @@ window.addEventListener('load', async () => {
       });
 
       socket.on('question', async (data) => {
-        if(data.status === 'close') {
+        if (data.status === 'close') {
           $(`#${data.id}`).remove();
         };
         const isHost = await h.checkIsHost();
@@ -449,7 +449,7 @@ window.addEventListener('load', async () => {
         console.error(e);
       };
     }
-    
+
     document
       .getElementById('message-form-id')
       .addEventListener('submit', (e) => {
@@ -477,51 +477,54 @@ window.addEventListener('load', async () => {
     };
 
     // create new poll
-    document.querySelector('.sub-menu-new-poll').onclick = () => {};
+    document.querySelector('.sub-menu-new-poll').onclick = () => { };
 
     //When the video icon is clicked
     document.getElementById('toggle-video').addEventListener('click', (e) => {
       e.preventDefault();
 
-      let elem = document.getElementById('toggle-video');
-      const image = elem.querySelector('img');
-      elem.classList.toggle('active');
+      if (myStream) {
+        let elem = document.getElementById('toggle-video');
+        const image = elem.querySelector('img');
+        elem.classList.toggle('active');
 
-      if (myStream.getVideoTracks()[0].enabled) {
-        image.src = 'assets/images/camera-off.svg';
-        elem.setAttribute('title', 'Show Video');
+        if (myStream.getVideoTracks()[0].enabled) {
+          image.src = 'assets/images/camera-off.svg';
+          elem.setAttribute('title', 'Show Video');
 
-        myStream.getVideoTracks()[0].enabled = false;
-      } else {
-        image.src = 'assets/images/camera.svg';
-        elem.setAttribute('title', 'Hide Video');
+          myStream.getVideoTracks()[0].enabled = false;
+        } else {
+          image.src = 'assets/images/camera.svg';
+          elem.setAttribute('title', 'Hide Video');
 
-        myStream.getVideoTracks()[0].enabled = true;
+          myStream.getVideoTracks()[0].enabled = true;
+        }
+
+        broadcastNewTracks(myStream, 'video');
       }
-
-      broadcastNewTracks(myStream, 'video');
     });
 
     //When the mute icon is clicked
     document.getElementById('toggle-mute').addEventListener('click', (e) => {
       e.preventDefault();
+      if (myStream) {
+        let elem = document.getElementById('toggle-mute');
+        const image = elem.querySelector('img');
+        elem.classList.toggle('active');
 
-      let elem = document.getElementById('toggle-mute');
-      const image = elem.querySelector('img');
-      elem.classList.toggle('active');
+        if (myStream.getAudioTracks()[0].enabled) {
+          image.src = 'assets/images/micro-off.svg';
+          elem.setAttribute('title', 'Unmute');
 
-      if (myStream.getAudioTracks()[0].enabled) {
-        image.src = 'assets/images/micro-off.svg';
-        elem.setAttribute('title', 'Unmute');
-        
-        myStream.getAudioTracks()[0].enabled = false;
-      } else {
-        image.src = 'assets/images/micro.svg';
-        elem.setAttribute('title', 'Mute');
-        myStream.getAudioTracks()[0].enabled = true;
+          myStream.getAudioTracks()[0].enabled = false;
+        } else {
+          image.src = 'assets/images/micro.svg';
+          elem.setAttribute('title', 'Mute');
+          myStream.getAudioTracks()[0].enabled = true;
+        }
+
+        broadcastNewTracks(myStream, 'audio');
       }
-
-      broadcastNewTracks(myStream, 'audio');
     });
 
     //When user clicks the 'Share screen' button
@@ -570,7 +573,7 @@ window.addEventListener('load', async () => {
           .then((screenStream) => {
             startRecording(screenStream);
           })
-          .catch(() => {});
+          .catch(() => { });
       }
     });
 
@@ -583,7 +586,7 @@ window.addEventListener('load', async () => {
           .then((videoStream) => {
             startRecording(videoStream);
           })
-          .catch(() => {});
+          .catch(() => { });
       }
     });
 
@@ -646,7 +649,7 @@ window.addEventListener('load', async () => {
     document.querySelector('#send-question-form').onsubmit = (e) => {
       e.preventDefault();
       const question = e.target.question.value;
-      if(!question) return;
+      if (!question) return;
       const isAnonymous = document.querySelector('#checkbox-anonymous').checked; // true false
       const sender = isAnonymous ? 'Anonymous' : username;
       const time = moment().format('h:mm A');
