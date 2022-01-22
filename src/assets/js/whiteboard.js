@@ -136,6 +136,14 @@ let socketId = '';
             pic_tool_click(this);
           });
 
+          $('#eraser-button').click(function () {
+            $('#colour-picker').val('FFFFFF');
+            colorPicked = 'FFFFFF';
+            lineWidthPicked = 6;
+            $('#line-Width').val(6);
+            pic_tool_click(this);
+          });
+
           //Draw Grids
           function SketchGrid(gridSize) {
             context.clearRect(0, 0, canvas.width, canvas.height);

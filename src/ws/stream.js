@@ -88,6 +88,9 @@ const stream = (socket) => {
       if (rooms[roomId][socketId]) {
         rooms[roomId][socketId]['username'] = data.username;
       }
+      socket
+        .to(roomId)
+        .emit('userRename', { id: socketId, newName: data.username });
       socket.to(roomId).emit('usersInRoom', rooms[roomId]);
       socket.emit('usersInRoom', rooms[data.room]);
     }
@@ -100,7 +103,6 @@ const stream = (socket) => {
   socket.on('newVote', ({ room, ...data }) => {
     socket.to(room).emit('newVote', data);
     poll = { ...poll, ...data.poll.poll };
-    console.log(poll);
   });
 
   socket.on('submitVote', ({ room, vote }) => {

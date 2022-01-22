@@ -2,7 +2,7 @@ import h from './helpers.js';
 
 window.addEventListener('load', async () => {
   const room = h.getQString(location.href, 'room');
-  const username = sessionStorage.getItem('username');
+  let username = sessionStorage.getItem('username');
 
   if (room) {
     const { data } = await axios.get(`/meet/${room}`);
@@ -174,6 +174,11 @@ window.addEventListener('load', async () => {
 
       socket.on('question', (data) => {
         h.renderQuestion(data, room, socket);
+      });
+
+      socket.on('userRename', ({ id, newName }) => {
+        const selector = `div#${id} > .user-name`;
+        document.querySelector(selector).innerHTML = newName;
       });
     });
 
@@ -576,6 +581,8 @@ window.addEventListener('load', async () => {
     document.querySelector('#renameBtn').onclick = () => {
       const newName = document.querySelector('#renameInput').value;
       if (!newName) return;
+      sessionStorage.setItem('username', newName);
+      username = newName;
       socket.emit('rename', { room, username: newName });
       document.querySelector('#renameCancelBtn').click();
     };
