@@ -149,8 +149,13 @@ linkRoom.innerHTML = window.location.href;
 
 const copyLinkBtn = document.querySelector('.interaction-info-copy-link-btn');
 copyLinkBtn.onclick = () => {
+  // copy 'ababab'
+  // danh sách copy 'ababa'
+  // copy '123123123123'
+  // danh sách copy ['link web', '12312312312', 'ababa'];
   navigator.clipboard.writeText(window.location.href);
 
+  
   var tooltip = document.getElementById('myTooltip');
   tooltip.innerHTML = 'Copied to clipboard';
   setTimeout(() => {

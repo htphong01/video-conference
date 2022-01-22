@@ -1,6 +1,7 @@
 import helpers from './helpers.js';
 
 window.addEventListener('load', () => {
+
   //When the 'Create room" is button is clicked
   document
     .getElementById('create-room')
@@ -19,13 +20,16 @@ window.addEventListener('load', () => {
         sessionStorage.setItem('roomName', roomName);
 
         //create room link
+        // uuidv4() thư viện để random chuỗi id
         const roomId = uuidv4();
+        // ababababa
         let roomLink = `${location.origin}/meet?room=${roomId}`;
+        // https://hp-video-conference.herokuapp.com/meet?room=ababababa
         const { data } = await axios.post('/meet', {
           roomId: roomId,
           roomName: roomName,
         });
-        console.log(data);
+        // kiểm tra thành công
         if (data.success) {
           window.location.replace(roomLink);
           document.querySelector('#room-name').value = '';

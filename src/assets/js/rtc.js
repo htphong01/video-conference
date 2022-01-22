@@ -41,10 +41,13 @@ window.addEventListener('load', async () => {
     }
 
     var pc = [];
+    // socket của client
+    // socketio -> client - server
+    // socket -> gồm nhiêu hàm để giao tiếp thằng server
+    // server -> socket để giao tiếp thằng client
     let socket = io('/stream');
 
     var socketId = '';
-    var randomNumber = `__${h.generateRandomString()}__${h.generateRandomString()}__`;
     var myStream = '';
     var screen = '';
     var recordedStream = [];
@@ -78,9 +81,14 @@ window.addEventListener('load', async () => {
       });
 
       socket.on('usersInRoom', async (data) => {
+        // data sẽ la danh sách người dùng
+        // lấy người dùng local ra từ cái mảng người dùng trả về
         const hostUser = JSON.parse(JSON.stringify(data[socketId]));
+        // xoá nó khỏi cái mảng người dùng trả về
         delete data[socketId];
+        // thêm người dùng local vào lại ở đầu mảng
         const users = Object.values({ socketId: hostUser, ...data });
+        // gọi api để kiếm tra xem thử người dùng local có phải chủ phòng hay không
         const isHost = await h.checkIsHost();
         sessionStorage.setItem('users', JSON.stringify(users));
 
@@ -165,15 +173,18 @@ window.addEventListener('load', async () => {
       });
 
       socket.on('mute', () => {
-        console.log('mute');
         let elem = document.getElementById('toggle-mute');
         if (elem.classList.contains('active')) return;
         elem.click();
         document.querySelector('#notificationModalBtn').click();
       });
 
-      socket.on('question', (data) => {
-        h.renderQuestion(data, room, socket);
+      socket.on('question', async (data) => {
+        if(data.status === 'close') {
+          $(`#${data.id}`).remove();
+        };
+        const isHost = await h.checkIsHost();
+        h.renderQuestion(data, room, socket, isHost.success);
       });
 
       socket.on('userRename', ({ id, newName }) => {
@@ -438,8 +449,7 @@ window.addEventListener('load', async () => {
         console.error(e);
       };
     }
-
-    //Chat textarea
+    
     document
       .getElementById('message-form-id')
       .addEventListener('submit', (e) => {
@@ -503,12 +513,11 @@ window.addEventListener('load', async () => {
       if (myStream.getAudioTracks()[0].enabled) {
         image.src = 'assets/images/micro-off.svg';
         elem.setAttribute('title', 'Unmute');
-
+        
         myStream.getAudioTracks()[0].enabled = false;
       } else {
         image.src = 'assets/images/micro.svg';
         elem.setAttribute('title', 'Mute');
-
         myStream.getAudioTracks()[0].enabled = true;
       }
 
@@ -637,7 +646,8 @@ window.addEventListener('load', async () => {
     document.querySelector('#send-question-form').onsubmit = (e) => {
       e.preventDefault();
       const question = e.target.question.value;
-      const isAnonymous = document.querySelector('#checkbox-anonymous').checked;
+      if(!question) return;
+      const isAnonymous = document.querySelector('#checkbox-anonymous').checked; // true false
       const sender = isAnonymous ? 'Anonymous' : username;
       const time = moment().format('h:mm A');
       socket.emit('question', {

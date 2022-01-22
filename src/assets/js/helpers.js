@@ -280,11 +280,12 @@ export default {
     chatMsgDiv.scrollTo(0, chatMsgDiv.scrollHeight);
   },
 
-  renderQuestion(question, room, socket) {
+  renderQuestion(question, room, socket, isHost) {
     let openTabList = document.querySelector('#open-tab-list');
     let closeTabList = document.querySelector('#close-tab-list');
     const liElement = document.createElement('li');
     liElement.className = 'interaction-chatting-message-item';
+    liElement.id = question.id;
 
     const divInfo = document.createElement('div');
     divInfo.className = 'chatting-message-info question-info-wrap';
@@ -301,7 +302,7 @@ export default {
 
     divInfo.appendChild(divWrap);
 
-    if (question.status === 'open') {
+    if (question.status === 'open' && isHost) {
       const buttonClose = document.createElement('button');
       buttonClose.innerHTML = 'Close';
       buttonClose.className = 'close-question-btn';
@@ -330,8 +331,8 @@ export default {
   replaceTrack(stream, recipientPeer) {
     let sender = recipientPeer.getSenders
       ? recipientPeer
-          .getSenders()
-          .find((s) => s.track && s.track.kind === stream.kind)
+        .getSenders()
+        .find((s) => s.track && s.track.kind === stream.kind)
       : false;
 
     sender ? sender.replaceTrack(stream) : '';
@@ -411,6 +412,23 @@ export default {
   },
 
   renderUserInRoom(users, socketId, isHost, socket) {
+    /**
+     *  <li class="interaction-people-item">
+          <div>
+            <img src="https://lh3.googleusercontent.com/a/AATXAJxKI9kG7COmDjvrHmOfM9CR3q-51QsnalnPdpBF=s192-c-mo"
+              alt="" class="interaction-people-avatar">
+            <span class="interaction-people-name">
+              Huyền Nguyễn Thị Cẩm (You)
+            </span>
+          </div>
+          <div class="control-icon-wrap">
+            <span>Rename</span>
+            <div>
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+        </li> 
+     */
     const ulListUserElement = document.querySelector(
       '.interaction-people-list'
     );
@@ -492,18 +510,18 @@ export default {
       totalRemoteVideosDesktop <= 2
         ? '50%'
         : totalRemoteVideosDesktop == 3
-        ? '33.33%'
-        : totalRemoteVideosDesktop <= 8
-        ? '25%'
-        : totalRemoteVideosDesktop <= 15
-        ? '20%'
-        : totalRemoteVideosDesktop <= 18
-        ? '16%'
-        : totalRemoteVideosDesktop <= 23
-        ? '15%'
-        : totalRemoteVideosDesktop <= 32
-        ? '12%'
-        : '10%';
+          ? '33.33%'
+          : totalRemoteVideosDesktop <= 8
+            ? '25%'
+            : totalRemoteVideosDesktop <= 15
+              ? '20%'
+              : totalRemoteVideosDesktop <= 18
+                ? '16%'
+                : totalRemoteVideosDesktop <= 23
+                  ? '15%'
+                  : totalRemoteVideosDesktop <= 32
+                    ? '12%'
+                    : '10%';
 
     for (let i = 0; i < totalRemoteVideosDesktop; i++) {
       elem[i].style.width = newWidth;

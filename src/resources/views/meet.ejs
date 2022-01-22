@@ -110,11 +110,11 @@
 								</div>
 								<div class="group">
 									<input type="text" id='room-name' class="form-control rounded-0 input-element"
-										placeholder="Room's name">
+										placeholder="Room's name" required>
 								</div>
 								<div class="group">
 									<input type="text" value="<%= user.displayName %>" id='your-name'
-										class="form-control rounded-0 input-element" placeholder="Display name">
+										class="form-control rounded-0 input-element" placeholder="Display name" required>
 								</div>
 								<div class="group mt-5">
 									<button id='create-room' class="btn btn-block btn-info">
@@ -132,12 +132,12 @@
 								<div class="col-12 p-0" style="margin-bottom: 25px;">
 									<!-- <label for="username">ID phòng:</label> -->
 									<input type="text" id="join-room-input-id" class="form-control rounded-0 input-element"
-										placeholder="Room ID">
+										placeholder="Room ID" required>
 								</div>
 								<div class="col-12 mb-3 p-0">
 									<!-- <label for="username">Tên hiển thị:</label> -->
 									<input type="text" value="<%= user.displayName %>" id='username' class="form-control input-element"
-										placeholder="Display name">
+										placeholder="Display name" required>
 								</div>
 								<div class="col-12 mb-3 p-0">
 									<!-- <label for="username">Tên hiển thị:</label> -->
@@ -287,7 +287,7 @@
 								</div>
 								<div style="width: 75%;">
 									<input id='chat-input' type="text" name="message" class="message-input"
-										placeholder="Send a message to everyone">
+										placeholder="Send a message to everyone" required>
 								</div>
 								<div style="width: 10%;float: right;">
 									<button class="btn-send-message" type="submit"><img src="./assets/images/send-message.svg"
@@ -464,7 +464,7 @@
 						<i class="fas fa-check"></i>
 						<span>Invited</span>
 					</div>
-					<input class="addUserInput" placeholder="Enter user's email" />
+					<input class="addUserInput" placeholder="Enter user's email" required />
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -487,7 +487,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<input id="renameInput" placeholder="Enter new username" />
+					<input id="renameInput" placeholder="Enter new username" required />
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" id="renameCancelBtn" data-dismiss="modal">Close</button>
@@ -534,13 +534,13 @@
 					<form id="create-poll-form" action="#" method="">
 						<div class="form-group">
 							<label for="recipient-name" class="col-form-label"><b>Title:</b></label>
-							<input type="text" class="form-control" id="poll-content" name="title">
+							<input type="text" class="form-control" id="poll-content" name="title" required>
 						</div>
 						<div>
 							<label for="message-text" class="col-form-label"><b>Poll:</b></label>
 						</div>
 						<div class="form-group poll-input-block">
-							<input type="text" class="form-control" name="poll[]" placeholder="Enter poll content">
+							<input type="text" class="form-control" name="poll[]" placeholder="Enter poll content" required>
 							<i class="fas fa-times remove-poll-btn"></i>
 						</div>
 						<div class="form-group add-poll-answer-block">
@@ -592,7 +592,7 @@
 				<div class="modal-footer">
 					<form class="w-100 m-0" id="send-question-form">
 						<div class="form-group">
-							<input name="question" id="send-question-input" class="form-control" placeholder="Enter your question" />
+							<input name="question" id="send-question-input" class="form-control" placeholder="Enter your question" required />
 						</div>
 						<div class="form-group d-flex justify-content-between align-items-baseline">
 							<label style="cursor: pointer;">
