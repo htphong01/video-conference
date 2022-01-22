@@ -25,6 +25,7 @@
 }
 
 .body-interaction {
+  height: calc(100% - 100px);
   background: #ffffff;
   width: 460px;
   height: 100%;

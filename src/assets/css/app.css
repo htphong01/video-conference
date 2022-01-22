@@ -184,7 +184,9 @@ body {
 
 .input-element {
   border: none;
+  border-radius: 5px !important;
   border-bottom: 1px solid #ddd;
+  height: 45px;
 }
 
 .input-element:focus {

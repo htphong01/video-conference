@@ -1,16 +1,16 @@
 :root {
-  --primary-background: #161616;
-  --input-background-color: #222222;
+  --primary-background: #f3f4f7;
+  --input-background-color: rgba(206, 228, 248, 0.9);
   --error-toast-background-color: #bd3630;
   --success-toast-background-color: #51a351;
-  --primary-text-color: #ffffff;
+  --primary-text-color: rgba(53, 75, 96, 0.9);
   --secondary-text-color: #5d5d5d;
   --placeholder-text-color: #6d6d6d;
   --button-linear-background: linear-gradient(
     90deg,
-    rgba(166, 55, 129, 1) 0%,
-    rgba(224, 47, 69, 1) 53%,
-    rgba(253, 142, 76, 1) 100%
+    #334e6e 0%,
+    #526d8d 53%,
+    rgba(147, 181, 212, 0.9) 100%
   );
   /* --primary-background: #FFFFFF;
   --input-background-color: #f2eded;
@@ -58,7 +58,7 @@ input:focus {
   border-radius: 4px;
   background: rgb(166, 55, 129);
   background: var(--button-linear-background);
-  color: var(--primary-text-color);
+  color: #ffffff;
   padding: 12px 32px;
   cursor: pointer;
   font-weight: bold;
@@ -82,6 +82,7 @@ input:focus {
 .body-title {
   font-size: 32px;
   font-weight: bold;
+  color: #466182;
 }
 
 .body-subtitle {
@@ -106,7 +107,7 @@ input:focus {
   border-radius: 5px;
   margin: 8px 0;
   background: var(--input-background-color);
-  color: var(--primary-text-color);
+  color:#000000;
   padding: 0 40px 0 16px;
 }
 
@@ -132,7 +133,7 @@ input.local-login-input:-webkit-autofill:active {
 .local-submit-input {
   cursor: pointer;
   text-align: left;
-  /* color: #FFFFFF; */
+  color: #FFFFFF;
   background: var(--button-linear-background);
 }
 
@@ -178,7 +179,7 @@ input.local-login-input:-webkit-autofill:active {
 }
 
 .forgot-password-group > a {
-  color: var(--primary-text-color);
+  color: #466182;
   text-decoration: underline;
 }
 

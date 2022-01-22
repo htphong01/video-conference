@@ -27,6 +27,7 @@ body {
   font-size: 16px;
   color: #000;
   overflow: hidden;
+  
 }
 
 a:hover {
@@ -39,7 +40,7 @@ input:focus {
 }
 
 .app {
-  background: var(--primary-background);
+  background: #f3f4f7;
   font-family: 'Nunito Sans', sans-serif;
   display: flex;
   flex-direction: column;
@@ -47,6 +48,7 @@ input:focus {
 }
 
 .app-header {
+  background: var(--primary-background);
   height: 100px;
   padding: 0 100px;
   border-bottom: 1px solid #ddd;
@@ -81,6 +83,7 @@ input:focus {
 }
 
 .user-profile {
+  background: var(--primary-background);
   position: relative;
   margin: 0 40px;
   padding: 50px 0;

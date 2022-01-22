@@ -56,8 +56,9 @@
   border: 0.5px solid #ddd;
 }
 .logo-web-index {
-  width: 300px;
+  width: 150px;
   height: 100%;
+  margin: 50px;
 }
 .login-html .sign-in-htm,
 .login-html .sign-up-htm {
@@ -182,6 +183,9 @@
   transform: rotate(0);
 }
 
+.btn-block {
+  font-family: 'Roboto';
+}
 .hr {
   height: 2px;
   margin: 60px 0 50px 0;
