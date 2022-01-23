@@ -529,56 +529,6 @@ let socketId = '';
         };
 
         //The Circle tool
-
-        //Old Circle Function
-        function old_drawCircle(x1, y1, x2, y2, color, linewidth, emit) {
-          context.clearRect(0, 0, canvas.width, canvas.height);
-
-          var radiusX = (x2 - x1) * 0.5,
-            radiusY = (y2 - y1) * 0.5,
-            centerX = x1 + radiusX,
-            centerY = y1 + radiusY,
-            step = 0.01,
-            a = step,
-            pi2 = Math.PI * 2 - step;
-
-          context.beginPath();
-          context.moveTo(
-            centerX + radiusX * Math.cos(0),
-            centerY + radiusY * Math.sin(0)
-          );
-
-          for (; a < pi2; a += step) {
-            context.lineTo(
-              centerX + radiusX * Math.cos(a),
-              centerY + radiusY * Math.sin(a)
-            );
-          }
-
-          context.closePath();
-          if (color) context.strokeStyle = '#' + color;
-          else context.strokeStyle = '#' + colorPicked;
-          if (linewidth) context.lineWidth = linewidth;
-          else context.lineWidth = lineWidthPicked;
-          context.stroke();
-
-          if (!emit) {
-            return;
-          }
-          var w = canvaso.width;
-          var h = canvaso.height;
-
-          socket.emit('circledraw', {
-            room,
-            x1: x1 / w,
-            y1: y1 / h,
-            x2: x2 / w,
-            y2: y2 / h,
-            color: colorPicked,
-            lineThickness: lineWidthPicked,
-          });
-        }
-
         //New Circle Function
         function drawCircle(x1, y1, x2, y2, color, linewidth, emit) {
           context.clearRect(0, 0, canvas.width, canvas.height);
