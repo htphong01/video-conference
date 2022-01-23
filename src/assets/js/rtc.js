@@ -81,14 +81,9 @@ window.addEventListener('load', async () => {
       });
 
       socket.on('usersInRoom', async (data) => {
-        // data sẽ la danh sách người dùng
-        // lấy người dùng local ra từ cái mảng người dùng trả về
         const hostUser = JSON.parse(JSON.stringify(data[socketId]));
-        // xoá nó khỏi cái mảng người dùng trả về
         delete data[socketId];
-        // thêm người dùng local vào lại ở đầu mảng
         const users = Object.values({ socketId: hostUser, ...data });
-        // gọi api để kiếm tra xem thử người dùng local có phải chủ phòng hay không
         const isHost = await h.checkIsHost();
         sessionStorage.setItem('users', JSON.stringify(users));
 
@@ -301,6 +296,10 @@ window.addEventListener('load', async () => {
           sender: socketId,
         });
       };
+
+      pc[partnerName].oniceconnectionstatechange = () => {
+        console.log('ICE state: ', pc[partnerName].iceConnectionState);
+      }
 
       //add
       pc[partnerName].ontrack = (e) => {

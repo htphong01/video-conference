@@ -155,7 +155,7 @@ copyLinkBtn.onclick = () => {
   // danh sách copy ['link web', '12312312312', 'ababa'];
   navigator.clipboard.writeText(window.location.href);
 
-  
+
   var tooltip = document.getElementById('myTooltip');
   tooltip.innerHTML = 'Copied to clipboard';
   setTimeout(() => {
@@ -230,3 +230,16 @@ $('.remove-poll-btn').click(function () {
     $('.remove-poll-btn').first().css({ display: 'none' });
   }
 });
+
+function isValidHttpUrl(string) {
+  let url;
+
+  try {
+    url = new URL(string);
+  } catch (_) {
+    return false;
+  }
+
+  return url.protocol === "http:" || url.protocol === "https:";
+}
+

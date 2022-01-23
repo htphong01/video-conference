@@ -4,9 +4,8 @@ const users = {};
 
 let poll = {};
 
-const questions = {};
-
 const stream = (socket) => {
+  console.log(socket.id);
   socket.on('ready', ({ room, socketId }) => {
     if (
       socket.adapter.rooms[room] &&
@@ -22,23 +21,12 @@ const stream = (socket) => {
   });
 
   socket.on('subscribe', (data) => {
-    //subscribe/join a room
-    // cơ chế room của socket.io
     socket.join(data.room);
     socket.join(data.socketId);
 
     users[data.socketId] = data.room;
     if (!rooms[data.room]) rooms[data.room] = {};
     rooms[data.room][data.socketId] = data.info;
-    /**
-     * rooms = {
-     *  ababababa: [
-     *    'Phong',
-     *    'Phong 1,
-     *    '....'
-     *  ]
-     * }
-     */
 
     socket.to(data.room).emit('usersInRoom', rooms[data.room]);
     socket.emit('usersInRoom', rooms[data.room]);
@@ -96,15 +84,6 @@ const stream = (socket) => {
     const roomId = users[socketId];
     // roomId
     if (roomId) {
-      // rooms[roomId] -> lấy danh sách thông tin người dùng có trong room đó
-      /**
-       * babaab: {
-       *  1: {
-       *    username: 'Phong',
-       *    avatar: 'âfssfafas'
-       *  }
-       * }
-       */
       if (rooms[roomId][socketId]) {
         rooms[roomId][socketId]['username'] = data.username;
       }
