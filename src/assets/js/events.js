@@ -21,7 +21,7 @@ window.addEventListener('load', () => {
 
         //create room link
         // uuidv4() thư viện để random chuỗi id
-        const roomId = uuidv4();
+        const roomId = uuid.v4();
         // ababababa
         let roomLink = `${location.origin}/meet?room=${roomId}`;
         // https://hp-video-conference.herokuapp.com/meet?room=ababababa

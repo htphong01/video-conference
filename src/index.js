@@ -12,6 +12,9 @@ const session = require('express-session');
 const passport = require('passport');
 const { connect } = require('./config/database');
 const { urlencoded } = require('express');
+
+require('dotenv').config({ override: true });
+
 const port = process.env.PORT || 3000;
 
 app.use(cors({ origin: '*' }));

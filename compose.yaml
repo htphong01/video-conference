@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    container_name: video-conference
+    ports:
+      - 3000:3000
+    working_dir: /video-conference
+    volumes:
+      - ./:/video-conference
